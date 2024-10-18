@@ -1,0 +1,21 @@
+{
+  "name": "307_mydiary_nibble",
+  "version": "1.0.0",
+  "description": "Group Nibble",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "npx prettier . --write",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mcray3000/307_MyDiary_Nibble.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mcray3000/307_MyDiary_Nibble/issues"
+  },
+  "homepage": "https://github.com/Mcray3000/307_MyDiary_Nibble#readme"
+}
