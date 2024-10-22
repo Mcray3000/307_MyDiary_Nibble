@@ -10,8 +10,10 @@
 
 4. **As a visual writer**, I want to be able to add photos to my diary entries, **so that** I can capture memories more completely.
 
-5. **As someone with lots of ideas**,  I want to use checklists in my notes, **so that** I can keep track of tasks or to-dos.
+5. **As someone with lots of ideas**, I want to use checklists in my notes, **so that** I can keep track of tasks or to-dos.
 
 6. **As a journalist**, I want to be able to format my notes with headings, bolding, and italics, **so that** I can structure my thoughts clearly.
 
 7. **As a meal planner**, I want to creat shopping lists based on recipes, **so that** I can prepare meals efficiently.
+
+8. **As an unorganized city planner** I want to be able to sort my entries by title or creation date, **so that** I can find my writings faster
