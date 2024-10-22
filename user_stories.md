@@ -22,6 +22,6 @@
 
 10. **As a new user**, I want to be able to easily make a new account with a username and password **so that** I can use the app
 
+11. **As a user adding entries**, I want to be able to choose if my entry is public blog post or private diary entry **so that** I can use the app as a blog or a diary
+
 12. **As an expert in computer science **, I want to share my knowledge **so that** others in the field can benefit from my research. 
-
-
