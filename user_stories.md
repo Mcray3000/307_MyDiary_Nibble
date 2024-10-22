@@ -37,7 +37,7 @@
 11. **As a user adding entries**, I want to be able to choose if my entry is a public blog post or private diary entry **so that** I can use the app as a blog or a diary (Timothy)
 
 
-12. **As an expert in computer science** I want to be able to send personalized share links **so that** I can refer people to my work. (Alan)
+12. **As an expert in computer science**, I want to be able to send personalized share links **so that** I can refer people to my work. (Alan)
 
 
 13. **As somebody who uses a daily planner**, I want to be able to see my previous entries in a calendar view **so that** I can go back and see old diary entries by date. (Jonathan)
