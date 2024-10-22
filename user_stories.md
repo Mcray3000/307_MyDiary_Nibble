@@ -16,4 +16,6 @@
 
 7. **As a meal planner**, I want to creat shopping lists based on recipes, **so that** I can prepare meals efficiently.
 
-8. **As an unorganized city planner** I want to be able to sort my entries by title or creation date, **so that** I can find my writings faster
+8. **As an unorganized city planner**, I want to be able to sort my entries by title or creation date, **so that** I can find my writings faster
+
+9. **As a privacy focused User**, I want to be able to login with a username and password **so that** people dont look at my privates
