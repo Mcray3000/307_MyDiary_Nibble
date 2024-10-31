@@ -1,6 +1,7 @@
 # 307_MyDiary_Nibble
 
 ## Contributing
+
 This project utilizes Prettier as a code formatter.\
 https://prettier.io/
 

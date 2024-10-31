@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/Mcray3000/307_MyDiary_Nibble/issues"
   },
-  "homepage": "https://github.com/Mcray3000/307_MyDiary_Nibble#readme"
+  "homepage": "https://github.com/Mcray3000/307_MyDiary_Nibble#readme",
+  "workspaces": [
+    "packages/*"
+  ]
 }
