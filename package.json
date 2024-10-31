@@ -8,7 +8,7 @@
     "format": "npx prettier . --write",
     "lint": "npx eslint .",
     "dev": "npm run dev -w react-frontend",
-    "start": "npm start -w express-backend"
+    "start": "npm -w express-backend run dev"
   },
   "repository": {
     "type": "git",
