@@ -13,7 +13,9 @@
     "url": "git+https://github.com/Mcray3000/307_MyDiary_Nibble.git"
   },
   "dependencies": {
-    "react": "^18.2.0",
+    "@supabase/supabase-js": "^2.46.1",
+    "express": "^4.21.1",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
