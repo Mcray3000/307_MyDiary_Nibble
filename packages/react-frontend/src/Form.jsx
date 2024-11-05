@@ -4,40 +4,65 @@ import React, { useState } from "react";
 function Form(props) {
   const [person, setPerson] = useState({
     name: "",
-    job: "",
+    password: "",
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "job") setPerson({ name: person["name"], job: value });
-    else setPerson({ name: value, job: person["job"] });
+    if (name === "password")
+      setPerson({ name: person["name"], password: value });
+    else setPerson({ name: value, password: person["password"] });
   }
 
   function submitForm() {
     props.handleSubmit(person);
-    setPerson({ name: "", job: "" });
+    setPerson({ name: "", password: "" });
   }
 
   return (
-    <form>
-      <label htmlFor="name">Name</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        value={person.name}
-        onChange={handleChange}
-      />
-      <label htmlFor="job">Job</label>
-      <input
-        type="text"
-        name="job"
-        id="job"
-        value={person.job}
-        onChange={handleChange}
-      />
-      <input type="button" value="Submit" onClick={submitForm} />
-    </form>
+    <div className="center-box">
+      <div className="title-card">Nibble and Scribble</div>
+      <form>
+        <label htmlFor="name" className="form-label">
+          Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value={person.name}
+          onChange={handleChange}
+          className="form-input"
+          placeholder="name"
+        />
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <input
+          type="text"
+          name="password"
+          id="password"
+          value={person.password}
+          onChange={handleChange}
+          className="form-input"
+          placeholder="password"
+        />
+        <input
+          type="button"
+          value="Login"
+          onClick={submitForm}
+          className="form-button"
+        />
+        <input
+          type="button"
+          value="New User"
+          onClick={() => {
+            /* TODO: Swap page to create user */
+          }}
+          className="form-button"
+        />
+      </form>
+    </div>
   );
 }
 export default Form;
