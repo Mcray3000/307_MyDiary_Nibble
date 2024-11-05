@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Form from "./Form.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import DiaryEntry from "./DiaryEntry.jsx"; 
+import DiaryEntry from "./DiaryEntry.jsx";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -73,17 +73,17 @@ function MyApp() {
 
   return (
     <Router>
-        <nav>
-            <Link to="/">Home</Link>
-            <Link to="/diary">Diary Entry</Link>
-        </nav>
-        <div className="container">
-            {location.pathname === '/' && message && <p>{message}</p>}
-            <Routes>
-                <Route path="/" element={<Form handleSubmit={updateList} />} />
-                <Route path="/diary" element={<DiaryEntry />} />
-            </Routes>
-        </div>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/diary">Diary Entry</Link>
+      </nav>
+      <div className="container">
+        {location.pathname === "/" && message && <p>{message}</p>}
+        <Routes>
+          <Route path="/" element={<Form handleSubmit={updateList} />} />
+          <Route path="/diary" element={<DiaryEntry />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
