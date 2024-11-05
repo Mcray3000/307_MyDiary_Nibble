@@ -1,23 +1,31 @@
 import express from "express";
-import cors from "cors"
+import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config({ path: '../../.env'});
+import bcryptjs from "bcryptjs";
+dotenv.config({ path: "../../.env" });
 
 import { createClient } from "@supabase/supabase-js";
 
 const app = express();
 const port = 8000;
 
-const supabaseUrl = 'https://vzutkihkzjyhnwzqsgrx.supabase.co';
+const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey);
 
+const numSaltRounds = 10;
+
+async function hash_password(password) {
+  const hash = await bcryptjs.hash(password, numSaltRounds);
+  return hash;
+}
 
 //not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
+  const hash = await hash_password(password);
   const { data, error } = await supabase
     .from("users")
-    .insert({ user_name: username, password_hash: password });
+    .insert({ user_name: username, password_hash: hash });
 
   if (error) {
     console.log("Error creating new user: ", error);
