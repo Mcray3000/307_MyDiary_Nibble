@@ -30,7 +30,7 @@ jobs:
 
       - name: npm install, build, and test
         env:
-          SUPABASE_URI: ${{ secrets.MONGODB_URI }}
+          SUPABASE_URI: ${{ secrets.postgresql://postgres:qPfEd9IrXw4zj24N@db.vzutkihkzjyhnwzqsgrx.supabase.co:5432/postgres }}
         run: |
           npm ci
           npm run build --if-present
