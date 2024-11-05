@@ -1,51 +1,54 @@
 // src/MyApp.jsx
 import React, { useState, useEffect } from "react";
-import Table from "./Table.jsx";
 import Form from "./Form.jsx";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import DiaryEntry from "./DiaryEntry.jsx"; 
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
+  const [message, setMessage] = useState(""); // Correctly defining message state
 
   useEffect(() => {
     fetchUsers()
       .then((res) => res.json())
       .then((json) => {
-        // console.log("json in hook ", json); // hard coded "uses_list" no longer exists cause it is now in db
         setCharacters(json);
       })
       .catch((error) => {
         console.log(error);
+        setMessage("Failed to load characters."); // Set error message
       });
   }, []);
 
   function postUser(person) {
-    const promise = fetch("Http://localhost:8000/users", {
+    return fetch("http://localhost:8000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(person),
     });
-
-    return promise;
   }
 
   function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
-    return promise;
+    return fetch("http://localhost:8000/users"); // Fetch users
   }
 
   function updateList(person) {
     postUser(person)
       .then((res) => res.json())
-      .then((person) => setCharacters([...characters, person]))
+      .then((newPerson) => {
+        setCharacters((prev) => [...prev, newPerson]);
+        setMessage("Character added successfully!"); // Set success message
+      })
       .catch((error) => {
         console.log(error);
+        setMessage("Failed to add character."); // Set error message
       });
   }
 
   function deleteUser(person) {
-    const promise = fetch(`http://localhost:8000/users/${person._id}`, {
+    return fetch(`http://localhost:8000/users/${person._id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -54,18 +57,34 @@ function MyApp() {
   }
 
   function removeOneCharacter(index) {
-    const updated = characters[index];
-    // deleteUser(updated) find what i want send id delete confirem responce handle responce
-    // console.log(updated);
-    deleteUser(updated);
-    setCharacters(characters.filter((_, i) => i !== index));
+    const characterToDelete = characters[index];
+    deleteUser(characterToDelete)
+      .then(() => {
+        setCharacters((prev) => prev.filter((_, i) => i !== index));
+        setMessage("Character deleted successfully!"); // Set success message
+      })
+      .catch((error) => {
+        console.log(error);
+        setMessage("Failed to delete character."); // Set error message
+      });
   }
+
   console.log("Characters in my app", characters);
+
   return (
-    <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
-      <Form handleSubmit={updateList} />
-    </div>
+    <Router>
+        <nav>
+            <Link to="/">Home</Link>
+            <Link to="/diary">Diary Entry</Link>
+        </nav>
+        <div className="container">
+            {location.pathname === '/' && message && <p>{message}</p>}
+            <Routes>
+                <Route path="/" element={<Form handleSubmit={updateList} />} />
+                <Route path="/diary" element={<DiaryEntry />} />
+            </Routes>
+        </div>
+    </Router>
   );
 }
 
