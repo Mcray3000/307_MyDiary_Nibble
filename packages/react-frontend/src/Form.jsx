@@ -20,10 +20,10 @@ function Form(props) {
   }
 
   return (
-    <div class="center-box">
-      <div class="title-card">Scribble and Nibble</div>
+    <div className="center-box">
+      <div className="title-card">Nibble and Scribble</div>
       <form>
-        <label for="name" class="form-label">
+        <label htmlFor="name" className="form-label">
           Name
         </label>
         <input
@@ -32,10 +32,10 @@ function Form(props) {
           id="name"
           value={person.name}
           onChange={handleChange}
-          class="form-input"
+          className="form-input"
           placeholder="name"
         />
-        <label for="password" class="form-label">
+        <label htmlFor="password" className="form-label">
           Password
         </label>
         <input
@@ -44,20 +44,22 @@ function Form(props) {
           id="password"
           value={person.password}
           onChange={handleChange}
-          class="form-input"
+          className="form-input"
           placeholder="password"
         />
         <input
           type="button"
           value="Login"
           onClick={submitForm}
-          class="form-button"
+          className="form-button"
         />
         <input
           type="button"
           value="New User"
-          onClick={submitForm}
-          class="form-button"
+          onClick={() => {
+            /* TODO: Swap page to create user */
+          }}
+          className="form-button"
         />
       </form>
     </div>
