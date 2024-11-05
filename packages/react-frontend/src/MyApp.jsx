@@ -1,6 +1,5 @@
 // src/MyApp.jsx
 import React, { useState, useEffect } from "react";
-import Table from "./Table.jsx";
 import Form from "./Form.jsx";
 
 function MyApp() {
@@ -63,7 +62,7 @@ function MyApp() {
   console.log("Characters in my app", characters);
   return (
     <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      {/* <Table characterData={characters} removeCharacter={removeOneCharacter} /> */}
       <Form handleSubmit={updateList} />
     </div>
   );
