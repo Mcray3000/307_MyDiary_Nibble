@@ -1170,8 +1170,6 @@ caption {
 .form-button {
   background-color: #afeeee;
   color: white; /* White text color */
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000; /* Black outline */
   border: none;
   padding: 10px 20px;
   margin: 10px auto;
