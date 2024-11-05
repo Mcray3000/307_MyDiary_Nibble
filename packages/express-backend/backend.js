@@ -50,12 +50,7 @@ app.listen(port, () => {
 app.post("/users", (req, res) => {
   const user_name = req.body.user_name;
   const password = req.body.password;
-  //password_hash =
-  /* For now, just store unhashed password. 
-  Will need to change this soon.
-  btw NEVER DO THIS in real code :)
-  */
-
+  
   make_new_user(user_name, password)
     .then((success_result) => {
       if (success_result) res.status(201).send();
