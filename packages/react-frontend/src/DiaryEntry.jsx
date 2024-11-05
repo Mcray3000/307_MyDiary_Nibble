@@ -17,7 +17,7 @@ function DiaryEntry() {
 
   return (
     <div>
-      <h2>Diary Entry</h2>
+      <div className="title-card">Diary Entry</div>
       <form onSubmit={handleSubmit}>
         <textarea
           value={entry}
@@ -27,8 +27,9 @@ function DiaryEntry() {
           cols="50"
           required
         />
-        <br />
-        <button type="submit">Submit Entry</button>
+        <button type="button" className="form-button">
+          Submit Entry
+        </button>
       </form>
     </div>
   );
