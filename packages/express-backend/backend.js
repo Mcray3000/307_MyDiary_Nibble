@@ -13,7 +13,7 @@ const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const numSaltRounds = 10;
+const numSaltRounds = Number(process.env.SALT_ROUNDS);
 
 async function hash_password(password) {
   const hash = await bcryptjs.hash(password, numSaltRounds);
