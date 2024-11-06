@@ -125,14 +125,14 @@ function Calendar() {
 
   function CalendarHeader() {
     return (
-      <div>
-        <button onClick={nextMonth} type="button" className="form-button">
-          Next
-        </button>
-        <button onClick={previousMonth} type="button" className="form-button">
-          Previous
-        </button>
+      <div className="calendar-header">
         <div className="title-card">{getMonth()}</div>
+        <button onClick={nextMonth} type="button" className="round-button">
+          ←
+        </button>
+        <button onClick={previousMonth} type="button" className="round-button">
+          →
+        </button>
       </div>
     );
   }
