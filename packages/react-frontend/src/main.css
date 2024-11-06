@@ -1100,7 +1100,8 @@ td {
 
 th,
 td {
-  text-align: left;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  text-align: center;
   padding: 0.5rem;
 }
 
@@ -1208,6 +1209,11 @@ caption {
 .new-user-button:hover {
   background-color: #87ceeb; /* Slightly darker blue on hover */
 }
+
+.outOfMonth {
+  color: #ccc; /* Light gray color for out-of-month days */
+}
+
 /*
    * Navigation
    */
