@@ -1,8 +1,9 @@
 // src/MyApp.jsx
 import React, { useState, useEffect } from "react";
-import Form from "./Form.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import DiaryEntry from "./DiaryEntry.jsx";
+import Calendar from "./Calendar.jsx";
+import Form from "./Form.jsx";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -76,12 +77,14 @@ function MyApp() {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/diary">Diary Entry</Link>
+        <Link to="/calendar">Calendar</Link>
       </nav>
       <div className="container">
         {location.pathname === "/" && message && <p>{message}</p>}
         <Routes>
           <Route path="/" element={<Form handleSubmit={updateList} />} />
           <Route path="/diary" element={<DiaryEntry />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
       </div>
     </Router>
