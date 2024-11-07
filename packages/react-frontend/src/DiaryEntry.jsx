@@ -16,20 +16,46 @@ function DiaryEntry() {
   };
 
   return (
-    <div>
-      <div className="title-card">Diary Entry</div>
-      <form onSubmit={handleSubmit}>
+    <div className="diary-container">
+      {" "}
+      {/* Add a container */}
+      <div className="diary-header">
+        <input type="text" className="diary-title" placeholder="Title" />
+        <span className="diary-private">(private)</span>
+        <span className="diary-edit">Last edited on xx/xx/xxxx</span>
+      </div>
+      <form onSubmit={handleSubmit} className="diary-form">
         <textarea
           value={entry}
           onChange={handleChange}
-          placeholder="Write your diary entry here..."
+          placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fermentum dictum metus, at cursus velit finibus non. Maecenas bibendum, ipsum vitae rhoncus efficitur..."
           rows="10"
           cols="50"
           required
         />
-        <button type="button" className="form-button">
-          Submit Entry
-        </button>
+        <div className="diary-toolbar">
+          <button type="button" className="round-button">
+            <img src="/path/to/pen-icon.svg" alt="Pen" />
+          </button>
+          <button type="button" className="round-button">
+            <img src="/path/to/image-icon.svg" alt="Image" />
+          </button>
+          {/* ... add other toolbar buttons ... */}
+        </div>
+        <div className="diary-footer">
+          <button type="button" className="round-button">
+            publish
+          </button>
+          <button type="button" className="round-button">
+            <img src="/path/to/lock-icon.svg" alt="Lock" />
+          </button>
+          <button type="button" className="round-button">
+            <img src="/path/to/star-icon.svg" alt="Star" />
+          </button>
+          <button type="button" className="round-button">
+            <img src="/path/to/undo-icon.svg" alt="Undo" />
+          </button>
+        </div>
       </form>
     </div>
   );
