@@ -169,6 +169,7 @@ optgroup,
 select,
 textarea {
   font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
   /* 1 */
   font-size: 100%;
   /* 1 */
@@ -205,6 +206,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
+  font-weight: bold;
   -webkit-appearance: button;
 }
 
@@ -215,6 +217,7 @@ button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
+  font-weight: bold;
   border-style: none;
   padding: 0;
 }
@@ -796,7 +799,7 @@ button,
   border-radius: 4px;
   background: #0366ee;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: bold;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 1rem;
   text-transform: none;
@@ -888,6 +891,7 @@ a.muted-button:active {
 .round-button,
 a.round-button {
   background-color: #afeeee;
+  font-weight: bold;
   color: white; /* White text color */
   border: none;
   padding: 10px 10px;
@@ -1221,6 +1225,80 @@ caption {
   display: flex;
   justify-content: space-between; /* or flex-start to align left */
   align-items: center; /* optional: vertically center align */
+}
+
+.diary-container {
+  margin-top: 100px;
+  background-color: #ff7eb9; /* Light pink background */
+  border: 10px solid #ff7eb9; /* Pink border */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px #00000080;
+}
+
+.diary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.diary-title {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  outline: none; /* Remove default input outline */
+}
+
+.diary-private {
+  font-style: italic;
+  color: #888; /* Gray color */
+}
+
+.diary-edit {
+  font-size: 0.8rem;
+  color: #888; /* Gray color */
+}
+
+.diary-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #ffffff;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  resize: none; /* Prevent resizing of textarea */
+}
+
+.diary-toolbar {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.diary-toolbar button {
+  background-color: #f2d9e6; /* Lighter pink */
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.diary-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.publish-button {
+  background-color: #afeeee;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 /*
