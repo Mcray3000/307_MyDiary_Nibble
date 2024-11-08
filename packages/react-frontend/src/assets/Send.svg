@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.86 10.34">
+  <g id="c" data-name="Send">
+    <g>
+      <path d="M18.35.35L4.99,6.44.71,4.13,18.34.32s.03.02,0,.03Z" fill="#95d7e5" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <polygon points="4.99 6.44 4.98 9.59 8.21 8.16 4.99 6.44" fill="#95d7e5" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M18.34.35L4.99,6.44l6.53,3.57L18.61.26s-.23.08-.27.09Z" fill="#95d7e5" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+  </g>
+</svg>
