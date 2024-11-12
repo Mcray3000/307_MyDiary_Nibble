@@ -34,7 +34,12 @@ function HamburgerMenu() {
           <ul>
             <li>
               <Link to="/" onClick={toggleMenu}>
-                Form
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link to="/create" onClick={toggleMenu}>
+                Create User
               </Link>
             </li>
             <li>

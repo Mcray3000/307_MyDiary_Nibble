@@ -1,7 +1,8 @@
-// src/Form.jsx
+// src/CreateUser.jsx
+
 import React, { useState } from "react";
 
-function Form(props) {
+function CreateUser(props) {
   const [person, setPerson] = useState({
     name: "",
     password: "",
@@ -14,7 +15,7 @@ function Form(props) {
     else setPerson({ name: value, password: person["password"] });
   }
 
-  function submitForm() {
+  function submitUser() {
     props.handleSubmit(person);
     setPerson({ name: "", password: "" });
   }
@@ -49,13 +50,13 @@ function Form(props) {
         />
         <input
           type="button"
-          value="Login"
-          onClick={submitForm}
+          value="Create"
+          onClick={submitUser}
           className="form-button"
         />
         <input
           type="button"
-          value="New User"
+          value="Login"
           onClick={() => {
             /* TODO: Swap page to create user */
           }}
@@ -65,4 +66,4 @@ function Form(props) {
     </div>
   );
 }
-export default Form;
+export default CreateUser;
