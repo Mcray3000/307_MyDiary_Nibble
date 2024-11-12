@@ -6,6 +6,7 @@ import Calendar from "./Calendar.jsx";
 import Login from "./Login.jsx";
 import CreateUser from "./CreateUser.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
+import MainPage from "./MainPage.jsx";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -81,7 +82,11 @@ function MyApp() {
         {location.pathname === "/" && message && <p>{message}</p>}
         <Routes>
           <Route path="/" element={<Login handleSubmit={updateList} />} />
-          <Route path="/create" element={<CreateUser handleSubmit={updateList} />} />
+          <Route
+            path="/create"
+            element={<CreateUser handleSubmit={updateList} />}
+          />
+          <Route path="/main" element={<MainPage />} />
           <Route path="/diary" element={<DiaryEntry />} />
           <Route path="/calendar" element={<Calendar />} />
         </Routes>
