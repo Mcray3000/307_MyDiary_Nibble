@@ -1,12 +1,15 @@
 // src/CreateUser.jsx
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreateUser(props) {
   const [person, setPerson] = useState({
     name: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -18,6 +21,7 @@ function CreateUser(props) {
   function submitUser() {
     props.handleSubmit(person);
     setPerson({ name: "", password: "" });
+    navigate("/main");
   }
 
   return (
@@ -57,9 +61,7 @@ function CreateUser(props) {
         <input
           type="button"
           value="Login"
-          onClick={() => {
-            /* TODO: Swap page to create user */
-          }}
+          onClick={() => navigate("/")}
           className="form-button"
         />
       </form>
