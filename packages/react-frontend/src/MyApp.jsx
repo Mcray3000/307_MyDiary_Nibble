@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import DiaryEntry from "./DiaryEntry.jsx";
 import Calendar from "./Calendar.jsx";
-import Form from "./Form.jsx";
+import Login from "./Login.jsx";
+import CreateUser from "./CreateUser.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
 
 function MyApp() {
@@ -79,7 +80,8 @@ function MyApp() {
       <div className="container">
         {location.pathname === "/" && message && <p>{message}</p>}
         <Routes>
-          <Route path="/" element={<Form handleSubmit={updateList} />} />
+          <Route path="/" element={<Login handleSubmit={updateList} />} />
+          <Route path="/create" element={<CreateUser handleSubmit={updateList} />} />
           <Route path="/diary" element={<DiaryEntry />} />
           <Route path="/calendar" element={<Calendar />} />
         </Routes>
