@@ -127,10 +127,10 @@ function Calendar() {
     return (
       <div className="calendar-header">
         <div className="title-card">{getMonth()}</div>
-        <button onClick={nextMonth} type="button" className="round-button">
+        <button onClick={previousMonth} type="button" className="round-button">
           ←
         </button>
-        <button onClick={previousMonth} type="button" className="round-button">
+        <button onClick={nextMonth} type="button" className="round-button">
           →
         </button>
       </div>
