@@ -409,8 +409,7 @@ h4,
 h5 {
   margin: 1.5rem 0;
   font-weight: 600;
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
-    Arial, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   line-height: 1.2;
   color: #404040;
 }
@@ -939,6 +938,7 @@ textarea {
   padding: 0.75rem;
   outline: none;
   background: transparent;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   margin-bottom: 0.5rem;
   font-size: 1rem;
   width: 100%;
@@ -1318,6 +1318,7 @@ caption {
   opacity: 0.75;
   transition: opacity 0.3s ease;
   outline: none; /* Add this to remove the outline */
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .hamburger-button:focus-visible {
@@ -1348,6 +1349,7 @@ caption {
   width: 0;
   /* Add display: none; */
   display: none;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .hamburger-menu.open .hamburger-nav {
@@ -1393,6 +1395,31 @@ caption {
 
 .hamburger-nav button {
   background-color: #f06292;
+}
+
+.create-button {
+  display: inline-block; /* Or 'block' if you want it to take full width */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border: none;
+  border-radius: 20px; /* Adjust the value for desired roundness */
+  background-color: #afeeee; /* Example color */
+  color: rgb(0, 0, 0);
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline from Link */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.date {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.top-bar {
+  display: flex; /* Use flexbox for easy alignment */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically (optional) */
+  /* ...other top-bar styles... */
 }
 
 /**

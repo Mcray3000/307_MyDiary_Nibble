@@ -33,6 +33,11 @@ function HamburgerMenu() {
         <nav className="hamburger-nav">
           <ul>
             <li>
+              <Link to="/main" onClick={toggleMenu}>
+                Main Page
+              </Link>
+            </li>
+            <li>
               <Link to="/" onClick={toggleMenu}>
                 Login
               </Link>
