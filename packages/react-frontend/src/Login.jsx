@@ -1,11 +1,14 @@
 // src/Login.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
   const [person, setPerson] = useState({
     name: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -16,6 +19,7 @@ function Login(props) {
 
   function submitForm() {
     props.handleSubmit(person);
+    navigate("/main");
     setPerson({ name: "", password: "" });
   }
 
@@ -56,9 +60,7 @@ function Login(props) {
         <input
           type="button"
           value="New User"
-          onClick={() => {
-            /* TODO: Swap page to create user */
-          }}
+          onClick={() => navigate("/create")}
           className="form-button"
         />
       </form>

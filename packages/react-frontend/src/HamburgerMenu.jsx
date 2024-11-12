@@ -38,16 +38,6 @@ function HamburgerMenu() {
               </Link>
             </li>
             <li>
-              <Link to="/" onClick={toggleMenu}>
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/create" onClick={toggleMenu}>
-                Create User
-              </Link>
-            </li>
-            <li>
               <Link to="/diary" onClick={toggleMenu}>
                 Diary
               </Link>
@@ -55,6 +45,11 @@ function HamburgerMenu() {
             <li>
               <Link to="/calendar" onClick={toggleMenu}>
                 Calendar
+              </Link>
+            </li>
+            <li>
+              <Link to="/" onClick={toggleMenu}>
+                Logout
               </Link>
             </li>
           </ul>
