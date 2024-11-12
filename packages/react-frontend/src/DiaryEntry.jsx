@@ -1,5 +1,13 @@
 // src/DiaryEntry.jsx
 import React, { useState, useEffect } from "react";
+import closedtrash from "./assets/ClosedTrash.svg";
+import opentrash from "./assets/OpenTrash.svg";
+import lock from "./assets/Lock.svg";
+import unlock from "./assets/Unlock.svg";
+import star from "./assets/Stared.svg";
+import unstar from "./assets/Unstared.svg";
+import send from "./assets/Send.svg";
+import sent from "./assets/SendHover.svg";
 
 function DiaryEntry() {
   const [entry, setEntry] = useState(""); // State to hold the diary entry text
@@ -20,7 +28,7 @@ function DiaryEntry() {
       {" "}
       {/* Add a container */}
       <div className="diary-header">
-        <input type="text" className="diary-title" placeholder="Title" />
+        <input type="text" className="diary-title" placeholder="Insert title" />
         <span className="diary-private">(private)</span>
         <span className="diary-edit">Last edited on xx/xx/xxxx</span>
       </div>
@@ -28,32 +36,52 @@ function DiaryEntry() {
         <textarea
           value={entry}
           onChange={handleChange}
-          placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fermentum dictum metus, at cursus velit finibus non. Maecenas bibendum, ipsum vitae rhoncus efficitur..."
+          placeholder="Scribble here..."
           rows="10"
           cols="50"
           required
         />
         <div className="diary-toolbar">
-          <button type="button" className="round-button">
+          {/* <button type="button" className="diary-button">
             <img src="/path/to/pen-icon.svg" alt="Pen" />
-          </button>
-          <button type="button" className="round-button">
-            <img src="/path/to/image-icon.svg" alt="Image" />
+          </button> */}
+          <button type="button" className="diary-button">
+            <img
+              src={send}
+              alt="Lock"
+              onMouseOver={(e) => (e.currentTarget.src = sent)}
+              onMouseOut={(e) => (e.currentTarget.src = send)}
+            />
           </button>
           {/* ... add other toolbar buttons ... */}
         </div>
         <div className="diary-footer">
-          <button type="button" className="round-button">
-            publish
+          <button type="button" className="form-button">
+            Save
           </button>
-          <button type="button" className="round-button">
-            <img src="/path/to/lock-icon.svg" alt="Lock" />
+          <button type="button" className="diary-button">
+            <img
+              src={lock}
+              alt="Lock"
+              onMouseOver={(e) => (e.currentTarget.src = unlock)}
+              onMouseOut={(e) => (e.currentTarget.src = lock)}
+            />
           </button>
-          <button type="button" className="round-button">
-            <img src="/path/to/star-icon.svg" alt="Star" />
+          <button type="button" className="diary-button">
+            <img
+              src={unstar}
+              alt="Lock"
+              onMouseOver={(e) => (e.currentTarget.src = star)}
+              onMouseOut={(e) => (e.currentTarget.src = unstar)}
+            />
           </button>
-          <button type="button" className="round-button">
-            <img src="/path/to/undo-icon.svg" alt="Undo" />
+          <button type="button" className="diary-button">
+            <img
+              src={closedtrash}
+              alt="Trash"
+              onMouseOver={(e) => (e.currentTarget.src = opentrash)}
+              onMouseOut={(e) => (e.currentTarget.src = closedtrash)}
+            />
           </button>
         </div>
       </form>
