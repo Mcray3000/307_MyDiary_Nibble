@@ -10,29 +10,82 @@ import send from "./assets/Send.svg";
 import sent from "./assets/SendHover.svg";
 
 function DiaryEntry() {
-  const [entry, setEntry] = useState(""); // State to hold the diary entry text
+  const [entry, setEntry] = useState("");
+  const [title, setTitle] = useState("");
+  const [isPrivate, setIsPrivate] = useState(true); // Initially private
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleChange = (e) => {
     setEntry(e.target.value); // Update state with the value from the textarea
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Diary Entry Submitted:", entry); // Handle the diary entry submission (log to console)
-    // You can add functionality to save the entry or send it to an API here
-    setEntry(""); // Clear the textarea after submission
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleSave = () => {
+    // Prepare the diary entry object
+    const diaryEntry = {
+      title: title,
+      content: entry,
+      private: isPrivate,
+      favorite: isFavorite,
+      // Add other properties like date, user ID, etc. as needed
+    };
+
+    // Send the diary entry to your backend API
+    fetch("http://localhost:8000/diaryEntries", {
+      // Replace with your actual API endpoint
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(diaryEntry),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to save scribble.");
+        }
+        console.log("Scribble saved successfully!");
+      })
+      .catch((error) => {
+        console.error("Error saving scribble:", error);
+        // Handle the error (e.g., show an error message)
+      });
+  };
+
+  const handleTrash = () => {
+    setEntry("");
+    setTitle("");
+  };
+
+  const handleLock = () => {
+    setIsPrivate(!isPrivate);
+  };
+
+  const handleStar = () => {
+    setIsFavorite(!isFavorite);
   };
 
   return (
     <div className="diary-container">
-      {" "}
-      {/* Add a container */}
       <div className="diary-header">
-        <input type="text" className="diary-title" placeholder="Insert title" />
-        <span className="diary-private">(private)</span>
-        <span className="diary-edit">Last edited on xx/xx/xxxx</span>
+        <input
+          type="text"
+          className="diary-title"
+          placeholder="Insert title"
+          value={title}
+          onChange={handleTitleChange}
+        />
+        <span className="diary-private">
+          ({isPrivate ? "private" : "public"})
+        </span>
+        <span className="diary-edit">Last edited on xx/xx/xxxx</span>{" "}
+        {/* Update with actual date/time */}
       </div>
-      <form onSubmit={handleSubmit} className="diary-form">
+      <form className="diary-form">
+        {" "}
+        {/* No need for onSubmit here */}
         <textarea
           value={entry}
           onChange={handleChange}
@@ -41,41 +94,28 @@ function DiaryEntry() {
           cols="50"
           required
         />
-        <div className="diary-toolbar">
-          {/* <button type="button" className="diary-button">
-            <img src="/path/to/pen-icon.svg" alt="Pen" />
-          </button> */}
-          <button type="button" className="diary-button">
-            <img
-              src={send}
-              alt="Lock"
-              onMouseOver={(e) => (e.currentTarget.src = sent)}
-              onMouseOut={(e) => (e.currentTarget.src = send)}
-            />
-          </button>
-          {/* ... add other toolbar buttons ... */}
-        </div>
+        {/* ... your toolbar ... */}
         <div className="diary-footer">
-          <button type="button" className="form-button">
+          <button type="button" className="form-button" onClick={handleSave}>
             Save
           </button>
-          <button type="button" className="diary-button">
+          <button type="button" className="diary-button" onClick={handleLock}>
             <img
-              src={lock}
+              src={isPrivate ? lock : unlock}
               alt="Lock"
               onMouseOver={(e) => (e.currentTarget.src = unlock)}
               onMouseOut={(e) => (e.currentTarget.src = lock)}
             />
           </button>
-          <button type="button" className="diary-button">
+          <button type="button" className="diary-button" onClick={handleStar}>
             <img
-              src={unstar}
-              alt="Lock"
+              src={isFavorite ? star : unstar}
+              alt="Star"
               onMouseOver={(e) => (e.currentTarget.src = star)}
               onMouseOut={(e) => (e.currentTarget.src = unstar)}
             />
           </button>
-          <button type="button" className="diary-button">
+          <button type="button" className="diary-button" onClick={handleTrash}>
             <img
               src={closedtrash}
               alt="Trash"

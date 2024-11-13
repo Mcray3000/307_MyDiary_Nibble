@@ -9,19 +9,33 @@ function CreateUser(props) {
     password: "",
   });
 
+  const [createUserError, setCreateUserError] = useState(null);
+
   const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "password")
-      setPerson({ name: person["name"], password: value });
-    else setPerson({ name: value, password: person["password"] });
+    setPerson((prevPerson) => ({
+      ...prevPerson,
+      [name]: value,
+    }));
   }
 
   function submitUser() {
-    props.handleSubmit(person);
-    setPerson({ name: "", password: "" });
-    navigate("/main");
+    props
+      .handleSubmit(person)
+      .then(() => {
+        // Handle success
+        navigate("/main");
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error creating user:", error);
+        setCreateUserError(error.message || "Failed to create user.");
+      })
+      .finally(() => {
+        setPerson({ name: "", password: "" });
+      });
   }
 
   return (
@@ -44,7 +58,7 @@ function CreateUser(props) {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           value={person.password}
@@ -52,6 +66,9 @@ function CreateUser(props) {
           className="form-input"
           placeholder="password"
         />
+        {createUserError && ( // Display error message if it exists
+          <div className="error-message">{createUserError}</div>
+        )}
         <input
           type="button"
           value="Create"
