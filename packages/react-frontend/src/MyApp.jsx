@@ -13,6 +13,7 @@ import Login from "./Login.jsx";
 import CreateUser from "./CreateUser.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
 import MainPage from "./MainPage.jsx";
+import Discover from "./Discover.jsx";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -99,6 +100,7 @@ function MyApp() {
           <Route path="/main" element={<MainPage />} />
           <Route path="/diary" element={<DiaryEntry />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/discover" element={<Discover />} />
         </Routes>
       </div>
     </Router>
