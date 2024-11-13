@@ -33,21 +33,18 @@ function MyApp() {
   }
 
   function handleCreateUser(person) {
-    // Check if username already exists (replace with your actual logic)
-    return fetchUserByName(person.name)
-      .then((res) => res.json())
-      .then((users) => {
-        if (users.some((user) => user.name === person.name)) {
+    return postUser(person).then((res) => {
+      if (!res.ok) {
+        // Handle error based on response status or returned JSON
+        if (res.status === 403) {
           throw new Error("Username already exists.");
-        }
-        return postUser(person); // Create the user if the username is unique
-      })
-      .then((res) => {
-        if (!res.ok) {
+        } else {
           throw new Error("Failed to create user.");
         }
-        return res.json();
-      });
+      }
+      // No need to parse JSON here since the response is a simple message
+      return true; // Indicate successful user creation
+    });
   }
 
   function handleLogin(person) {
