@@ -34,7 +34,7 @@ function HamburgerMenu() {
           <ul>
             <li>
               <Link to="/main" onClick={toggleMenu}>
-                Main Page
+                Home
               </Link>
             </li>
             <li>
