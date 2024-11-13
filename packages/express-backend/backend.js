@@ -64,7 +64,17 @@ app.post("/entries", async (req, res) => {
       if (error) {
       return res.status(500).send({ error: error.message });
     }
-    res.status(200).json({ message: 'Entry created successfully', data });
+    //currently not doing anything
+    //TODO: Make this User Friendly
+    const formattedData = data.map(entry => {
+      if (entry.date) {
+        const dateVar = new Date("2021-09-24T12:38:54.656Z");
+        console.log(dateVar.toLocaleString());
+      }
+      return entry;
+    });
+
+    res.status(200).json(formattedData);
   } catch (err) {
     console.log(err); 
     res.status(500).send({ error: 'Server error' });
