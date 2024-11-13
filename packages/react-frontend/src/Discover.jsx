@@ -23,20 +23,6 @@ function Discover() {
         console.error("Error fetching entries:", error);
         // Handle the error (e.g., show an error message)
       });
-      // Fetch tags from your backend API
-      fetch("http://localhost:8000/tags")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch tags.");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setTags(data); // Set tags data
-      })
-      .catch((error) => {
-        console.error("Error fetching tags:", error);
-      });
       }, []);
 
 
