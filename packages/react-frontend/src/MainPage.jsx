@@ -4,18 +4,29 @@ import { Link } from "react-router-dom";
 
 function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
-  const [entries, setEntries] = useState([]); // Placeholder for entries
+  const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    // Get the current date in your desired format (e.g., MM/DD/YYYY)
     const today = new Date();
     const formattedDate = `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`;
     setCurrentDate(formattedDate);
 
-    // TODO: Fetch previous entries from your data source (e.g., an API)
-    // and update the 'entries' state.
+    // Fetch previous entries from backend
+    fetch("http://localhost:8000/diaryEntries")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch entries.");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setEntries(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching entries:", error);
+      });
   }, []);
 
   return (

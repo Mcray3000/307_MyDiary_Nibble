@@ -3,10 +3,6 @@ import React, { useState } from "react";
 function Calendar() {
   const [month, setMonth] = useState("November 2024");
 
-  function getMonth() {
-    return month;
-  }
-
   function nextMonth() {
     if (month === "November 2024") {
       setMonth("December 2024");
@@ -126,7 +122,7 @@ function Calendar() {
   function CalendarHeader() {
     return (
       <div className="calendar-header">
-        <div className="title-card">{getMonth()}</div>
+        <div className="title-card">{month}</div>
         <button onClick={previousMonth} type="button" className="round-button">
           ←
         </button>
