@@ -43,11 +43,6 @@ function HamburgerMenu() {
               </Link>
             </li>
             <li>
-              <Link to="/diary" onClick={toggleMenu}>
-                Diary
-              </Link>
-            </li>
-            <li>
               <Link to="/calendar" onClick={toggleMenu}>
                 Calendar
               </Link>
