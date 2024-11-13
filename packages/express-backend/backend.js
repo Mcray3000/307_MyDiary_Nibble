@@ -29,13 +29,34 @@ app.get("/entries/:id", async (req, res) => {
     if (error) {
       return res.status(500).send({ error: error.message });
     }
-
     res.status(200).send(data);
   } catch (err) {
     res.status(500).send({ error: 'Server error'});
   }
+});
+
+app.post("/entries", async (req, res) => {
+  const { user_id, title, entry, is_public, status } = req.body;
+  console.log(req.body); 
+  try {
+    const { data, error } = await supabase
+      .from('entries')
+      .insert({user_id, title, entry, is_public, status })
+      .select();
+
+    
+      if (error) {
+      return res.status(500).send({ error: error.message });
+    }
+
+    res.status(200).json({ message: 'Entry created successfully', data });
+  } catch (err) {
+    console.log(err); 
+    res.status(500).send({ error: 'Server error' });
+  }
 
 });
+
 
 
 
