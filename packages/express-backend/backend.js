@@ -38,25 +38,40 @@ app.get("/entries/:id", async (req, res) => {
 app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   console.log(req.body); 
+
   try {
     const { data, error } = await supabase
       .from('entries')
       .insert({user_id, title, entry, is_public, status })
       .select();
 
-    
       if (error) {
       return res.status(500).send({ error: error.message });
     }
-
     res.status(200).json({ message: 'Entry created successfully', data });
   } catch (err) {
     console.log(err); 
     res.status(500).send({ error: 'Server error' });
-  }
-
+  }d
 });
 
+app.post("/users", async (req, res) => {
+  const {user_name, password_hash} = req.body;
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .insert({user_name, password_hash})
+      .select()
+
+      if (error) {
+      return res.status(500).send({ error: error.message });
+    }
+    res.status(200).send("SUCCESS");
+  } catch (err) {
+    console.log(err); 
+    res.status(500).send({ error: 'Server error' });
+  }
+});
 
 
 
