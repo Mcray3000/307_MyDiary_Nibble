@@ -14,6 +14,38 @@ function DiaryEntry() {
   const [title, setTitle] = useState("");
   const [isPrivate, setIsPrivate] = useState(true); // Initially private
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isShare, setIsShare] = useState(false);
+  const [lastEdited, setLastEdited] = useState(null);
+
+  useEffect(() => {
+    // Function to update lastEdited time
+    const updateLastEdited = () => {
+      const now = new Date();
+      const options = {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      };
+      const formattedTime = now.toLocaleString("en-US", options);
+      setLastEdited(formattedTime);
+    };
+
+    // Update lastEdited initially
+    updateLastEdited();
+
+    // Event listeners to update lastEdited on input changes
+    const inputFields = document.querySelectorAll(".diary-title, textarea");
+    inputFields.forEach((input) => {
+      input.addEventListener("input", updateLastEdited);
+    });
+
+    // Cleanup: remove event listeners when component unmounts
+    return () => {
+      inputFields.forEach((input) => {
+        input.removeEventListener("input", updateLastEdited);
+      });
+    };
+  }, []);
 
   const handleChange = (e) => {
     setEntry(e.target.value); // Update state with the value from the textarea
@@ -67,6 +99,10 @@ function DiaryEntry() {
     setIsFavorite(!isFavorite);
   };
 
+  const handleShare = () => {
+    setIsShare(!isShare);
+  };
+
   return (
     <div className="diary-container">
       <div className="diary-header">
@@ -77,11 +113,14 @@ function DiaryEntry() {
           value={title}
           onChange={handleTitleChange}
         />
-        <span className="diary-private">
-          ({isPrivate ? "private" : "public"})
-        </span>
-        <span className="diary-edit">Last edited on xx/xx/xxxx</span>{" "}
-        {/* Update with actual date/time */}
+        <div className="diary-status">
+          <span className={`diary-private ${isPrivate ? "private" : "public"}`}>
+            {isPrivate ? "Private" : "Public"}
+          </span>
+          <span className="diary-edit">
+            Last edited {lastEdited ? lastEdited : "xx/xx/xxxx"}
+          </span>
+        </div>
       </div>
       <form className="diary-form">
         {" "}
@@ -99,20 +138,35 @@ function DiaryEntry() {
           <button type="button" className="form-button" onClick={handleSave}>
             Save
           </button>
-          <button type="button" className="diary-button" onClick={handleLock}>
+          <button type="button" className="diary-button" onClick={handleTrash}>
+            <img
+              src={send}
+              alt="Share"
+              onMouseOver={(e) => (e.currentTarget.src = sent)}
+              onMouseOut={(e) => (e.currentTarget.src = send)}
+            />
+          </button>
+          <button
+            type="button"
+            className="diary-button"
+            onClick={handleLock}
+            onMouseDown={(e) => e.preventDefault()}
+          >
             <img
               src={isPrivate ? lock : unlock}
               alt="Lock"
-              onMouseOver={(e) => (e.currentTarget.src = unlock)}
-              onMouseOut={(e) => (e.currentTarget.src = lock)}
+              onMouseOut={(e) =>
+                (e.currentTarget.src = isPrivate ? lock : unlock)
+              }
             />
           </button>
           <button type="button" className="diary-button" onClick={handleStar}>
             <img
               src={isFavorite ? star : unstar}
               alt="Star"
-              onMouseOver={(e) => (e.currentTarget.src = star)}
-              onMouseOut={(e) => (e.currentTarget.src = unstar)}
+              onMouseOut={(e) =>
+                (e.currentTarget.src = isFavorite ? star : unstar)
+              }
             />
           </button>
           <button type="button" className="diary-button" onClick={handleTrash}>
