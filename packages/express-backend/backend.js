@@ -54,7 +54,7 @@ app.post("/users", (req, res) => {
   make_new_user(user_name, password)
     .then((success_result) => {
       if (success_result) res.status(201).send();
-      else res.status(403).send();
+      else res.status(409).send();
     })
     .catch((error) => console.log(error));
 });
