@@ -1,24 +1,22 @@
 // src/MyApp.jsx
 import React, { useState, useEffect } from "react";
-import Form from "./Form.jsx";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import DiaryEntry from "./DiaryEntry.jsx"; 
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import DiaryEntry from "./DiaryEntry.jsx";
+import Calendar from "./Calendar.jsx";
+import Login from "./Login.jsx";
+import CreateUser from "./CreateUser.jsx";
+import HamburgerMenu from "./HamburgerMenu.jsx";
+import MainPage from "./MainPage.jsx";
+import Discover from "./Discover.jsx";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
-  const [message, setMessage] = useState(""); // Correctly defining message state
-
-  useEffect(() => {
-    fetchUsers()
-      .then((res) => res.json())
-      .then((json) => {
-        setCharacters(json);
-      })
-      .catch((error) => {
-        console.log(error);
-        setMessage("Failed to load characters."); // Set error message
-      });
-  }, []);
 
   function postUser(person) {
     return fetch("http://localhost:8000/users", {
@@ -30,8 +28,48 @@ function MyApp() {
     });
   }
 
-  function fetchUsers() {
-    return fetch("http://localhost:8000/users"); // Fetch users
+  function fetchUserByName(name) {
+    return fetch(`http://localhost:8000/users?name=${name}`);
+  }
+
+  function handleCreateUser(person) {
+    // Check if username already exists (replace with your actual logic)
+    return fetchUserByName(person.name)
+      .then((res) => res.json())
+      .then((users) => {
+        if (users.some((user) => user.name === person.name)) {
+          throw new Error("Username already exists.");
+        }
+        return postUser(person); // Create the user if the username is unique
+      })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to create user.");
+        }
+        return res.json();
+      });
+  }
+
+  function handleLogin(person) {
+    return fetchUserByName(person.name)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((users) => {
+        // Basic authentication check (insecure, use hashing in production)
+        const user = users.find(
+          (user) =>
+            user.name === person.name && user.password === person.password
+        );
+        if (!user) {
+          throw new Error("Invalid username or password");
+        }
+        // You might want to store user data in local storage or context API here
+        return true; // Indicate successful login
+      });
   }
 
   function updateList(person) {
@@ -47,43 +85,24 @@ function MyApp() {
       });
   }
 
-  function deleteUser(person) {
-    return fetch(`http://localhost:8000/users/${person._id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }
-
-  function removeOneCharacter(index) {
-    const characterToDelete = characters[index];
-    deleteUser(characterToDelete)
-      .then(() => {
-        setCharacters((prev) => prev.filter((_, i) => i !== index));
-        setMessage("Character deleted successfully!"); // Set success message
-      })
-      .catch((error) => {
-        console.log(error);
-        setMessage("Failed to delete character."); // Set error message
-      });
-  }
-
   console.log("Characters in my app", characters);
 
   return (
     <Router>
-        <nav>
-            <Link to="/">Home</Link>
-            <Link to="/diary">Diary Entry</Link>
-        </nav>
-        <div className="container">
-            {location.pathname === '/' && message && <p>{message}</p>}
-            <Routes>
-                <Route path="/" element={<Form handleSubmit={updateList} />} />
-                <Route path="/diary" element={<DiaryEntry />} />
-            </Routes>
-        </div>
+      <HamburgerMenu />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Login handleLogin={handleLogin} />} />
+          <Route
+            path="/create"
+            element={<CreateUser handleSubmit={handleCreateUser} />}
+          />
+          <Route path="/main" element={<MainPage />} />
+          <Route path="/diary" element={<DiaryEntry />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/discover" element={<Discover />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

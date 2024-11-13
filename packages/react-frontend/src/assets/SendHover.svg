@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="b" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.56 13.42">
+  <g id="c" data-name="SendHover">
+    <g>
+      <path d="M22.05.35l-13.36,6.1-4.28-2.32L22.04.32s.03.02,0,.03Z" fill="#95d7e5" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <polygon points="8.69 6.44 8.68 9.59 11.9 8.16 8.69 6.44" fill="#95d7e5" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <path d="M22.04.35l-13.35,6.09,6.53,3.57L22.31.26s-.23.08-.27.09Z" fill="#95d7e5" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <line x1=".1" y1="7.71" x2="3.67" y2="6.07" fill="none" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <line x1="2.41" y1="11.28" x2="6.89" y2="9.22" fill="none" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+      <line x1="6.58" y1="13.19" x2="12.94" y2="10.27" fill="none" stroke="#231f20" stroke-miterlimit="10" stroke-width=".5"/>
+    </g>
+  </g>
+</svg>
