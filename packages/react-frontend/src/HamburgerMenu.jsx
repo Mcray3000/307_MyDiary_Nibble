@@ -22,7 +22,6 @@ function HamburgerMenu() {
         aria-label="Toggle Menu"
         onClick={toggleMenu}
       >
-        {/* Replace with your preferred icon (e.g., SVG) */}
         <img
           src={menu}
           alt="Menu"
@@ -39,7 +38,7 @@ function HamburgerMenu() {
             </li>
             <li>
               <Link to="/discover" onClick={toggleMenu}>
-                Discover
+                Public Scribbles
               </Link>
             </li>
             <li>
