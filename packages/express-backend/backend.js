@@ -35,6 +35,22 @@ app.get("/entries/:id", async (req, res) => {
   }
 });
 
+app.get("/entries/", async (req, res) => {
+  const is_public = req.query.is_public ? req.query.is_public : "False";
+  try {
+    const {data, error } = await supabase
+      .from('public_entries')
+      .select('*')
+    if (error) {
+      return res.status(500).send({ error: error.message });
+    }
+    console.log(data)
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send({ error: 'Server error'});
+  }
+});
+
 app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   console.log(req.body); 
