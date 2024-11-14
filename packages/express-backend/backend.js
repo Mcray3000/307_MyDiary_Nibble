@@ -10,7 +10,6 @@ dotenv.config({ path: "../../.env" });
 import { createClient } from "@supabase/supabase-js";
 
 const app = express();
-const port = 8000;
 const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -27,7 +26,7 @@ function generate_access_token(username) {
         } else {
           resolve(token);
         }
-      },
+      }
     );
   });
 }
@@ -36,15 +35,12 @@ app.use(cors());
 
 const numSaltRounds = Number(process.env.SALT_ROUNDS);
 
-
 app.use(cors());
 app.use(express.json());
-
 
 app.get("/", (req, res) => {
   res.send("Welcome to Nibble & Scribble!");
 });
-
 
 async function hash_password(password) {
   const hash = await bcryptjs.hash(password, numSaltRounds);
@@ -53,7 +49,7 @@ async function hash_password(password) {
 
 //not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
-  console.log(username, password)
+  console.log(username, password);
   const hash = await hash_password(password);
   const { data, error } = await supabase
     .from("users")
@@ -81,16 +77,16 @@ app.post("/users", (req, res) => {
 //returns entry given an id
 app.get("/entries/:id", async (req, res) => {
   try {
-    const {data, error } = await supabase
-      .from('entries')
-      .select('*')
-      .filter('entry_id', 'eq', req.params["id"]);
+    const { data, error } = await supabase
+      .from("entries")
+      .select("*")
+      .filter("entry_id", "eq", req.params["id"]);
     if (error) {
       return res.status(500).send({ error: error.message });
     }
     res.status(200).send(data);
   } catch (err) {
-    res.status(500).send({ error: 'Server error'});
+    res.status(500).send({ error: "Server error" });
   }
 });
 
@@ -98,16 +94,14 @@ app.get("/entries/:id", async (req, res) => {
 app.get("/entries/", async (req, res) => {
   const is_public = req.query.is_public ? req.query.is_public : "False";
   try {
-    const {data, error } = await supabase
-      .from('public_entries')
-      .select('*')
+    const { data, error } = await supabase.from("public_entries").select("*");
     if (error) {
       return res.status(500).send({ error: error.message });
     }
-    console.log(data)
+    console.log(data);
     res.status(200).send(data);
   } catch (err) {
-    res.status(500).send({ error: 'Server error'});
+    res.status(500).send({ error: "Server error" });
   }
 });
 
@@ -115,39 +109,35 @@ app.get("/entries/", async (req, res) => {
 app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   // Set publish_date if status is 'published'
-  const publish_date = status === 'published' ? new Date().toISOString() : null;
-  console.log(req.body); 
+  const publish_date = status === "published" ? new Date().toISOString() : null;
+  console.log(req.body);
 
   try {
     const { data, error } = await supabase
-      .from('entries')
-      .insert({user_id, title, entry, is_public, status, publish_date })
+      .from("entries")
+      .insert({ user_id, title, entry, is_public, status, publish_date })
       .select();
 
     if (error) {
       return res.status(500).send({ error: error.message });
     }
-    res.status(201).send(data); 
+    res.status(201).send(data);
   } catch (err) {
-    console.log(err); 
-    res.status(500).send({ error: 'Server error' });
+    console.log(err);
+    res.status(500).send({ error: "Server error" });
   }
 });
 
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(8000, () => {
+  console.log(`Server running at https://three07-mydiary-nibble.onrender.com`);
 });
-
 
 app.get("/users", async (req, res) => {
   const name = req.query.name;
   let data, error;
 
   if (name === undefined) {
-    ({ data, error } = await supabase
-      .from("users")
-      .select());
+    ({ data, error } = await supabase.from("users").select());
   } else {
     ({ data, error } = await supabase
       .from("users")
@@ -163,4 +153,3 @@ app.get("/users", async (req, res) => {
 });
 
 //export default { make_new_user };
-
