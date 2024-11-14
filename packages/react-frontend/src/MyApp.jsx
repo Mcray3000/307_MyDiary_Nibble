@@ -57,8 +57,6 @@ function MyApp() {
     });
   }
 
-  }
-
   console.log("Characters in my app", characters);
 
   return (
