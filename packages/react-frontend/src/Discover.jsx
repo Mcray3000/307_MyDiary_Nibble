@@ -9,7 +9,7 @@ function Discover() {
 
   useEffect(() => {
     // Fetch public entries from your backend API
-    fetch("http://localhost:8000/entries?is_public=True") // Adjust the endpoint as needed
+    fetch("https://three07-mydiary-nibble.onrender.com/entries?is_public=True") // Adjust the endpoint as needed
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch public entries.");
