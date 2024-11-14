@@ -103,7 +103,6 @@ app.post("/entries", async (req, res) => {
       if (error) {
       return res.status(500).send({ error: error.message });
     }
-  res.status(200).json(formattedData);
   } catch (err) {
     console.log(err); 
     res.status(500).send({ error: 'Server error' });
@@ -115,7 +114,7 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-
+//implement get users
 
 //export default { make_new_user };
 
