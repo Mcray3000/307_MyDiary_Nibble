@@ -81,7 +81,10 @@ function MyApp() {
         {location.pathname === "/" && message && <p>{message}</p>}
         <Routes>
           <Route path="/" element={<Login handleSubmit={updateList} />} />
-          <Route path="/create" element={<CreateUser handleSubmit={updateList} />} />
+          <Route
+            path="/create"
+            element={<CreateUser handleSubmit={updateList} />}
+          />
           <Route path="/diary" element={<DiaryEntry />} />
           <Route path="/calendar" element={<Calendar />} />
         </Routes>
