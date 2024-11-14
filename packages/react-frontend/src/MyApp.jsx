@@ -49,25 +49,12 @@ function MyApp() {
   }
 
   function handleLogin(person) {
-    return fetchUserByName(person.name)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((users) => {
-        // Basic authentication check (insecure, use hashing in production)
-        const user = users.find(
-          (user) =>
-            user.name === person.name && user.password === person.password
-        );
-        if (!user) {
-          throw new Error("Invalid username or password");
-        }
-        // You might want to store user data in local storage or context API here
-        return true; // Indicate successful login
-      });
+    return fetchUserByName(person.name).then((res) => {
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return res.json();
+    });
   }
 
   function updateList(person) {
