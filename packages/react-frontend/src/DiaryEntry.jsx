@@ -58,15 +58,15 @@ function DiaryEntry() {
   const handleSave = () => {
     // Prepare the diary entry object
     const diaryEntry = {
-      title: title,
-      content: entry,
-      private: isPrivate,
-      favorite: isFavorite,
-      // Add other properties like date, user ID, etc. as needed
+      user_id: 96,  // Temporary static ID of user_name 'MiladRocks249'; update with authenticated user ID when available
+      title,
+      entry,
+      is_public: isPrivate ? 'false' : 'true',
+      status: isPrivate ? 'draft' : 'published'
     };
 
     // Send the diary entry to your backend API
-    fetch("http://localhost:8000/diaryEntries", {
+    fetch("https://three07-mydiary-nibble.onrender.com/entries", {
       // Replace with your actual API endpoint
       method: "POST",
       headers: {
