@@ -57,17 +57,6 @@ function MyApp() {
     });
   }
 
-  function updateList(person) {
-    postUser(person)
-      .then((res) => res.json())
-      .then((newPerson) => {
-        setCharacters((prev) => [...prev, newPerson]);
-        setMessage("Character added successfully!"); // Set success message
-      })
-      .catch((error) => {
-        console.log(error);
-        setMessage("Failed to add character."); // Set error message
-      });
   }
 
   console.log("Characters in my app", characters);
