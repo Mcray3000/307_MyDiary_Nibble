@@ -4,7 +4,15 @@ import { Link } from "react-router-dom";
 
 function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState([
+    {
+      _id: "1", // You can use any unique identifier here
+      title: "Your First Scribble",
+      author: "You", // Replace with your name or a username
+      date: "2024-11-13T12:00:00.000Z", // Example date
+    },
+    // Add more entries as needed
+  ]);
 
   useEffect(() => {
     const today = new Date();
@@ -46,9 +54,8 @@ function MainPage() {
           {entries.map((entry, index) => (
             <div key={index} className="entry-card">
               <div className="entry-title">{entry.title}</div>{" "}
-              {/* Assuming your entry object has a 'title' property */}
+              <div className="entry-author">Author: {entry.author}</div>
               <div className="entry-date">{entry.date}</div>{" "}
-              {/* Assuming your entry object has a 'date' property */}
             </div>
           ))}
         </div>
