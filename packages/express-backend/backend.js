@@ -1,3 +1,5 @@
+// backend.js
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -13,6 +15,13 @@ const app = express();
 const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+const corsOptions = {
+  origin: "https://scribbleandnibble.vercel.app/",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 function generate_access_token(username) {
   return new Promise((resolve, reject) => {
@@ -31,11 +40,11 @@ function generate_access_token(username) {
   });
 }
 
-app.use(cors());
+// app.use(cors());
 
 const numSaltRounds = Number(process.env.SALT_ROUNDS);
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
