@@ -1,7 +1,52 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+// there are modules for building calendars, but for our MVP we are hard coding the months of Nov, Dec 2024
 function Calendar() {
   const [month, setMonth] = useState("November 2024");
+  const [diaryEntries, setDiaryEntires] = useState({});
+  const [selectDate, setSelectedDate] = useState(null);
+  const [showPopUp, setPopUp] = useState(false);
+
+  useEffect(() => { 
+    getEntries();
+  }, []);
+
+  //load all entries from db
+  function getEntries() {
+    fetch("http://localhost:8000/entries", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then(response => response.json())
+    // format timestamps to fetch entries by date only
+    .then(data => {
+      const formattedEntries = {};
+      data.forEach(entry => {
+        const date = formatDate(entry.date);
+        if (!formattedEntries[date]) {
+          formattedEntries[date] = [];
+        }
+        formattedEntries[date].push(entry);
+      })
+      // for debugging
+      console.log(formattedEntries)
+      setDiaryEntires(formattedEntries);
+    })
+    .catch((error) => {
+      console.error("Error fetching entries", error);
+    });
+  }
+
+  // parse timestamp into date
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
 
   function nextMonth() {
     if (month === "November 2024") {
@@ -25,44 +70,44 @@ function Calendar() {
             <td className="outOfMonth">29</td>
             <td className="outOfMonth">30</td>
             <td className="outOfMonth">31</td>
-            <td>1</td>
-            <td>2</td>
+            <td onClick={() => handelDateClick("2024-11-01")}>1</td>
+            <td onClick={() => handelDateClick("2024-11-02")}>2</td>
           </tr>
           <tr>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
+            <td onClick={() => handelDateClick("2024-11-03")}>3</td>
+            <td onClick={() => handelDateClick("2024-11-04")}>4</td>
+            <td onClick={() => handelDateClick("2024-11-05")}>5</td>
+            <td onClick={() => handelDateClick("2024-11-06")}>6</td>
+            <td onClick={() => handelDateClick("2024-11-07")}>7</td>
+            <td onClick={() => handelDateClick("2024-11-08")}>8</td>
+            <td onClick={() => handelDateClick("2024-11-09")}>9</td>
           </tr>
           <tr>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>15</td>
-            <td>16</td>
+            <td onClick={() => handelDateClick("2024-11-10")}>10</td>
+            <td onClick={() => handelDateClick("2024-11-11")}>11</td>
+            <td onClick={() => handelDateClick("2024-11-12")}>12</td>
+            <td onClick={() => handelDateClick("2024-11-13")}>13</td>
+            <td onClick={() => handelDateClick("2024-11-14")}>14</td>
+            <td onClick={() => handelDateClick("2024-11-15")}>15</td>
+            <td onClick={() => handelDateClick("2024-11-16")}>16</td>
           </tr>
           <tr>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
-            <td>22</td>
-            <td>23</td>
+            <td onClick={() => handelDateClick("2024-11-17")}>17</td>
+            <td onClick={() => handelDateClick("2024-11-18")}>18</td>
+            <td onClick={() => handelDateClick("2024-11-19")}>19</td>
+            <td onClick={() => handelDateClick("2024-11-20")}>20</td>
+            <td onClick={() => handelDateClick("2024-11-21")}>21</td>
+            <td onClick={() => handelDateClick("2024-11-22")}>22</td>
+            <td onClick={() => handelDateClick("2024-11-23")}>23</td>
           </tr>
           <tr>
-            <td>24</td>
-            <td>25</td>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
-            <td>29</td>
-            <td>30</td>
+            <td onClick={() => handelDateClick("2024-11-24")}>24</td>
+            <td onClick={() => handelDateClick("2024-11-25")}>25</td>
+            <td onClick={() => handelDateClick("2024-11-26")}>26</td>
+            <td onClick={() => handelDateClick("2024-11-27")}>27</td>
+            <td onClick={() => handelDateClick("2024-11-28")}>28</td>
+            <td onClick={() => handelDateClick("2024-11-29")}>29</td>
+            <td onClick={() => handelDateClick("2024-11-30")}>30</td>
           </tr>
         </>
       );
@@ -70,45 +115,45 @@ function Calendar() {
       return (
         <>
           <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
+            <td onClick={() => handelDateClick("2024-12-01")}>1</td>
+            <td onClick={() => handelDateClick("2024-12-02")}>2</td>
+            <td onClick={() => handelDateClick("2024-12-03")}>3</td>
+            <td onClick={() => handelDateClick("2024-12-04")}>4</td>
+            <td onClick={() => handelDateClick("2024-12-05")}>5</td>
+            <td onClick={() => handelDateClick("2024-12-06")}>6</td>
+            <td onClick={() => handelDateClick("2024-12-07")}>7</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
+            <td onClick={() => handelDateClick("2024-12-08")}>8</td>
+            <td onClick={() => handelDateClick("2024-12-09")}>9</td>
+            <td onClick={() => handelDateClick("2024-12-10")}>10</td>
+            <td onClick={() => handelDateClick("2024-12-11")}>11</td>
+            <td onClick={() => handelDateClick("2024-12-12")}>12</td>
+            <td onClick={() => handelDateClick("2024-12-13")}>13</td>
+            <td onClick={() => handelDateClick("2024-12-14")}>14</td>
           </tr>
           <tr>
-            <td>15</td>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
+            <td onClick={() => handelDateClick("2024-12-15")}>15</td>
+            <td onClick={() => handelDateClick("2024-12-16")}>16</td>
+            <td onClick={() => handelDateClick("2024-12-17")}>17</td>
+            <td onClick={() => handelDateClick("2024-12-18")}>18</td>
+            <td onClick={() => handelDateClick("2024-12-19")}>19</td>
+            <td onClick={() => handelDateClick("2024-12-20")}>20</td>
+            <td onClick={() => handelDateClick("2024-12-21")}>21</td>
           </tr>
           <tr>
-            <td>22</td>
-            <td>23</td>
-            <td>24</td>
-            <td>25</td>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
+            <td onClick={() => handelDateClick("2024-12-22")}>22</td>
+            <td onClick={() => handelDateClick("2024-12-23")}>23</td>
+            <td onClick={() => handelDateClick("2024-12-24")}>24</td>
+            <td onClick={() => handelDateClick("2024-12-25")}>25</td>
+            <td onClick={() => handelDateClick("2024-12-26")}>26</td>
+            <td onClick={() => handelDateClick("2024-12-27")}>27</td>
+            <td onClick={() => handelDateClick("2024-12-28")}>28</td>
           </tr>
           <tr>
-            <td>29</td>
-            <td>30</td>
-            <td>31</td>
+            <td onClick={() => handelDateClick("2024-12-29")}>29</td>
+            <td onClick={() => handelDateClick("2024-12-30")}>30</td>
+            <td onClick={() => handelDateClick("2024-12-31")}>31</td>
             <td className="outOfMonth">1</td>
             <td className="outOfMonth">2</td>
             <td className="outOfMonth">3</td>
@@ -117,6 +162,33 @@ function Calendar() {
         </>
       );
     }
+  }
+
+  function handelDateClick(date) {
+    if (diaryEntries[date]) {
+      setSelectedDate(date);
+      setPopUp(true);
+    }
+  }
+  
+  // render popup for when date gets clicked and date has entries
+  function DiaryPopUp({ date, entries, onClose }) {
+    return (
+      <div className="calPopUp">
+        <h2>Scribbles for: {date}</h2>
+        <div className="entries-grid">
+          {/* Map through the 'entries' state to display previous entries */}
+          {entries.map((entry, index) => (
+            <div key={index} className="entry-card">
+              <div className="entry-title">{entry.title}</div>{" "}
+              <div className="entry-author">Author: {entry.author}</div>
+              <div className="entry-date">{formatDate(entry.date)}</div>{" "}
+            </div>
+          ))}
+        </div>
+        <button onClick={onClose} type="button" className="round-button">Close</button>
+      </div>
+    );
   }
 
   function CalendarHeader() {
@@ -150,13 +222,21 @@ function Calendar() {
         <tbody>{loadDaysOfMonth()}</tbody>
       </table>
     );
-  }
+  };
+
   return (
-    <div>
-      <CalendarHeader />
-      <CalendarBody />
-    </div>
-  );
+      <div>
+        <CalendarHeader />
+        {showPopUp && selectDate && (
+          <DiaryPopUp 
+            date={selectDate}
+            entries={diaryEntries[selectDate]}
+            onClose={()=> setPopUp(false)}
+          />
+        )} 
+        <CalendarBody />
+      </div>
+  )
 }
 
 export default Calendar;
