@@ -92,17 +92,20 @@ app.get("/entries/", async (req, res) => {
 //adding a new entry
 app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
+  // Set publish_date if status is 'published'
+  const publish_date = status === 'published' ? new Date().toISOString() : null;
   console.log(req.body); 
 
   try {
     const { data, error } = await supabase
       .from('entries')
-      .insert({user_id, title, entry, is_public, status })
+      .insert({user_id, title, entry, is_public, status, publish_date })
       .select();
 
-      if (error) {
+    if (error) {
       return res.status(500).send({ error: error.message });
     }
+    res.status(201).send(data); 
   } catch (err) {
     console.log(err); 
     res.status(500).send({ error: 'Server error' });

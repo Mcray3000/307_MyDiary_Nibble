@@ -22,7 +22,7 @@ function MainPage() {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    fetch("http://localhost:8000/diaryEntries")
+    fetch("http://localhost:8000/entries")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entries.");
@@ -36,6 +36,17 @@ function MainPage() {
         console.error("Error fetching entries:", error);
       });
   }, []);
+
+    // Function to format the date
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", {
+        year: "numeric", // "yyyy"
+        month: "long", // "Month"
+        day: "numeric", // "dd"
+      });
+    };
+  
 
   return (
     <div className="main-page">
@@ -55,7 +66,7 @@ function MainPage() {
             <div key={index} className="entry-card">
               <div className="entry-title">{entry.title}</div>{" "}
               <div className="entry-author">Author: {entry.author}</div>
-              <div className="entry-date">{entry.date}</div>{" "}
+              <div className="entry-date">{formatDate(entry.date)}</div>{" "}
             </div>
           ))}
         </div>
