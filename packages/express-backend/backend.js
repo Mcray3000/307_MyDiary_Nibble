@@ -103,31 +103,10 @@ app.post("/entries", async (req, res) => {
     res.status(500).send({ error: 'Server error' });
   }d
 });
-/*
-app.post("/users", async (req, res) => {
-  const {user_name, password_hash} = req.body;
-  try {
-    const { data, error } = await supabase
-      .from('users')
-      .insert({user_name, password_hash})
-      .select()
-
-      if (error) {
-      return res.status(500).send({ error: error.message });
-    }
-    res.status(200).send("SUCCESS");
-  } catch (err) {
-    console.log(err); 
-    res.status(500).send({ error: 'Server error' });
-  }
-});
-*/
-
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-
 
 app.post("/users", (req, res) => {
   const user_name = req.body.user_name;
@@ -141,7 +120,18 @@ app.post("/users", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//implement get users
+app.get("/users", async (req, res) => {
+  
+  const { data, error } = await supabase
+    .from("users")
+    .select();
+  
+    if (error) {
+      return res.status(500).send( { 'error': error.message });
+    }
+
+    return res.status(200).send(data);
+});
 
 //export default { make_new_user };
 

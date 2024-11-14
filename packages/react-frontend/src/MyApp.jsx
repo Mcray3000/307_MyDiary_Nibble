@@ -19,6 +19,7 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   function postUser(person) {
+    console.log(JSON.stringify(person));
     return fetch("http://localhost:8000/users", {
       method: "POST",
       headers: {
