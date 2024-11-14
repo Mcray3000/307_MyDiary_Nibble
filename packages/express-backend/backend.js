@@ -29,9 +29,7 @@ async function hash_password(password) {
 
 //not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
-  console.log("INSIDE ASYNC")
   console.log(username, password)
-  console.log("END ASYNC")
   const hash = await hash_password(password);
   const { data, error } = await supabase
     .from("users")
