@@ -7,6 +7,7 @@
     "format": "npx prettier . --write",
     "lint": "npx eslint .",
     "dev": "npm run dev -w react-frontend",
+    "build": "npm run build --workspace=react-frontend",
     "start": "npm -w express-backend run dev",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
