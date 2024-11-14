@@ -4,7 +4,15 @@ import { Link } from "react-router-dom";
 
 function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState([
+    {
+      _id: "1", // You can use any unique identifier here
+      title: "Your First Scribble",
+      author: "You", // Replace with your name or a username
+      date: "2024-11-13T12:00:00.000Z", // Example date
+    },
+    // Add more entries as needed
+  ]);
 
   useEffect(() => {
     const today = new Date();
@@ -14,7 +22,7 @@ function MainPage() {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    fetch("http://localhost:8000/diaryEntries")
+    fetch("http://localhost:8000/entries")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entries.");
@@ -28,6 +36,17 @@ function MainPage() {
         console.error("Error fetching entries:", error);
       });
   }, []);
+
+    // Function to format the date
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", {
+        year: "numeric", // "yyyy"
+        month: "long", // "Month"
+        day: "numeric", // "dd"
+      });
+    };
+  
 
   return (
     <div className="main-page">
@@ -46,9 +65,8 @@ function MainPage() {
           {entries.map((entry, index) => (
             <div key={index} className="entry-card">
               <div className="entry-title">{entry.title}</div>{" "}
-              {/* Assuming your entry object has a 'title' property */}
-              <div className="entry-date">{entry.date}</div>{" "}
-              {/* Assuming your entry object has a 'date' property */}
+              <div className="entry-author">Author: {entry.author}</div>
+              <div className="entry-date">{formatDate(entry.date)}</div>{" "}
             </div>
           ))}
         </div>

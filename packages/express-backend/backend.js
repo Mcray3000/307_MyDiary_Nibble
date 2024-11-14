@@ -90,17 +90,20 @@ app.get("/entries/", async (req, res) => {
 //adding a new entry
 app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
+  // Set publish_date if status is 'published'
+  const publish_date = status === 'published' ? new Date().toISOString() : null;
   console.log(req.body); 
 
   try {
     const { data, error } = await supabase
       .from('entries')
-      .insert({user_id, title, entry, is_public, status })
+      .insert({user_id, title, entry, is_public, status, publish_date })
       .select();
 
-      if (error) {
+    if (error) {
       return res.status(500).send({ error: error.message });
     }
+    res.status(201).send(data); 
   } catch (err) {
     console.log(err); 
     res.status(500).send({ error: 'Server error' });
@@ -112,7 +115,27 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-//implement get users
+app.get("/users", async (req, res) => {
+  const name = req.query.name;
+  let data, error;
+
+  if (name === undefined) {
+    ({ data, error } = await supabase
+      .from("users")
+      .select());
+  } else {
+    ({ data, error } = await supabase
+      .from("users")
+      .select()
+      .eq("user_name", name));
+  }
+
+  if (error) {
+    return res.status(500).send({ error: error.message });
+  }
+
+  return res.status(200).send(data);
+});
 
 //export default { make_new_user };
 
