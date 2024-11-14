@@ -114,7 +114,27 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-//implement get users
+app.get("/users", async (req, res) => {
+  const name = req.query.name;
+  let data, error;
+
+  if (name === undefined) {
+    ({ data, error } = await supabase
+      .from("users")
+      .select());
+  } else {
+    ({ data, error } = await supabase
+      .from("users")
+      .select()
+      .eq("user_name", name));
+  }
+
+  if (error) {
+    return res.status(500).send({ error: error.message });
+  }
+
+  return res.status(200).send(data);
+});
 
 //export default { make_new_user };
 
