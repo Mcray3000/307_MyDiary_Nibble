@@ -1,5 +1,6 @@
 // src/Login.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
   const [person, setPerson] = useState({
@@ -7,16 +8,27 @@ function Login(props) {
     password: "",
   });
 
+  const [loginError, setLoginError] = useState(false);
+
+  const navigate = useNavigate();
+
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "password")
-      setPerson({ name: person["name"], password: value });
-    else setPerson({ name: value, password: person["password"] });
+    setPerson((prevPerson) => ({
+      ...prevPerson,
+      [name]: value,
+    }));
   }
 
   function submitForm() {
-    props.handleSubmit(person);
-    setPerson({ name: "", password: "" });
+    props
+      .handleLogin(person)
+      .then(() => navigate("/main"))
+      .catch((error) => {
+        console.error("Login failed:", error);
+        setLoginError(true); // Set login error state
+      })
+      .finally(() => setPerson({ name: "", password: "" }));
   }
 
   return (
@@ -39,7 +51,7 @@ function Login(props) {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           value={person.password}
@@ -47,6 +59,9 @@ function Login(props) {
           className="form-input"
           placeholder="password"
         />
+        {loginError && (
+          <div className="error-message">Invalid username or password</div>
+        )}
         <input
           type="button"
           value="Login"
@@ -56,9 +71,7 @@ function Login(props) {
         <input
           type="button"
           value="New User"
-          onClick={() => {
-            /* TODO: Swap page to create user */
-          }}
+          onClick={() => navigate("/create")}
           className="form-button"
         />
       </form>

@@ -22,7 +22,6 @@ function HamburgerMenu() {
         aria-label="Toggle Menu"
         onClick={toggleMenu}
       >
-        {/* Replace with your preferred icon (e.g., SVG) */}
         <img
           src={menu}
           alt="Menu"
@@ -33,23 +32,23 @@ function HamburgerMenu() {
         <nav className="hamburger-nav">
           <ul>
             <li>
-              <Link to="/" onClick={toggleMenu}>
-                Login
+              <Link to="/main" onClick={toggleMenu}>
+                Home
               </Link>
             </li>
             <li>
-              <Link to="/create" onClick={toggleMenu}>
-                Create User
-              </Link>
-            </li>
-            <li>
-              <Link to="/diary" onClick={toggleMenu}>
-                Diary
+              <Link to="/discover" onClick={toggleMenu}>
+                Public Scribbles
               </Link>
             </li>
             <li>
               <Link to="/calendar" onClick={toggleMenu}>
                 Calendar
+              </Link>
+            </li>
+            <li>
+              <Link to="/" onClick={toggleMenu}>
+                Logout
               </Link>
             </li>
           </ul>
