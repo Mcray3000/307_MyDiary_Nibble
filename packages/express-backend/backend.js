@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bcryptjs from "bcryptjs";
+
+import jwt from "jsonwebtoken";
+
 dotenv.config({ path: "../../.env" });
 
 import { createClient } from "@supabase/supabase-js";
@@ -11,7 +14,28 @@ const port = 8000;
 const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+function generate_access_token(username) {
+  return new Promise((resolve, reject) => {
+    jwt.sign(
+      { username: username },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "1d" },
+      (error, token) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(token);
+        }
+      },
+    );
+  });
+}
+
+app.use(cors());
+
 const numSaltRounds = Number(process.env.SALT_ROUNDS);
+
 
 app.use(cors());
 app.use(express.json());
@@ -114,6 +138,7 @@ app.post("/entries", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
 
 app.get("/users", async (req, res) => {
   const name = req.query.name;

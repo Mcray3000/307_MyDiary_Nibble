@@ -77,6 +77,7 @@ function MyApp() {
       <HamburgerMenu />
       <div className="container">
         <Routes>
+
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route
             path="/create"
