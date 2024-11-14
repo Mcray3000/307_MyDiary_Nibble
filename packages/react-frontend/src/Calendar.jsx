@@ -70,12 +70,12 @@ function Calendar() {
             <td className="outOfMonth">29</td>
             <td className="outOfMonth">30</td>
             <td className="outOfMonth">31</td>
-            <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-01")}>1</button>
-            <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-02")}>2</button>
+            <td><button type="button" className="round-button" onClick={() => handelDateClick("2024-11-01")}>1</button></td>
+            <td><button type="button" className="round-button" onClick={() => handelDateClick("2024-11-02")}>2</button></td>
           </tr>
           <tr>
-            <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-03")}>3</button>
-            <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-04")}>4</button>
+            <td><button type="button" className="round-button" onClick={() => handelDateClick("2024-11-03")}>3</button></td>
+            <td><button type="button" className="round-button" onClick={() => handelDateClick("2024-11-04")}>4</button></td>
             <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-05")}>5</button>
             <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-06")}>6</button>
             <button type="button" className="round-button" onClick={() => handelDateClick("2024-11-07")}>7</button>
