@@ -17,7 +17,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: "https://scribbleandnibble.vercel.app/",
+  origin: "https://three07-mydiary-nibble.onrender.com/",
   optionsSuccessStatus: 200,
 };
 
