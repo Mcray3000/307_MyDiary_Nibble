@@ -103,7 +103,7 @@ app.post("/entries", async (req, res) => {
     res.status(500).send({ error: 'Server error' });
   }d
 });
-
+/*
 app.post("/users", async (req, res) => {
   const {user_name, password_hash} = req.body;
   try {
@@ -121,7 +121,7 @@ app.post("/users", async (req, res) => {
     res.status(500).send({ error: 'Server error' });
   }
 });
-
+*/
 
 
 app.listen(port, () => {
@@ -136,10 +136,12 @@ app.post("/users", (req, res) => {
   make_new_user(user_name, password)
     .then((success_result) => {
       if (success_result) res.status(201).send();
-      else res.status(403).send();
+      else res.status(409).send();
     })
     .catch((error) => console.log(error));
 });
+
+//implement get users
 
 //export default { make_new_user };
 
