@@ -8,12 +8,19 @@ import { createClient } from "@supabase/supabase-js";
 
 const app = express();
 const port = 8000;
-
 const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
-
 const numSaltRounds = Number(process.env.SALT_ROUNDS);
+
+app.use(cors());
+app.use(express.json());
+
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Nibble & Scribble!");
+});
+
 
 async function hash_password(password) {
   const hash = await bcryptjs.hash(password, numSaltRounds);
@@ -22,6 +29,9 @@ async function hash_password(password) {
 
 //not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
+  console.log("INSIDE ASYNC")
+  console.log(username, password)
+  console.log("END ASYNC")
   const hash = await hash_password(password);
   const { data, error } = await supabase
     .from("users")
@@ -35,14 +45,18 @@ async function make_new_user(username, password) {
   }
 }
 
-app.use(cors());
-
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Welcome to Nibble & Scribble!");
+app.post("/users", (req, res) => {
+  const user_name = req.body.name;
+  const password = req.body.password;
+  make_new_user(user_name, password)
+    .then((success_result) => {
+      if (success_result) res.status(201).send();
+      else res.status(403).send();
+    })
+    .catch((error) => console.log(error));
 });
 
+//returns entry given an id
 app.get("/entries/:id", async (req, res) => {
   try {
     const {data, error } = await supabase
@@ -58,6 +72,7 @@ app.get("/entries/:id", async (req, res) => {
   }
 });
 
+//used to look up all public entries
 app.get("/entries/", async (req, res) => {
   const is_public = req.query.is_public ? req.query.is_public : "False";
   try {
@@ -74,6 +89,7 @@ app.get("/entries/", async (req, res) => {
   }
 });
 
+//adding a new entry
 app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   console.log(req.body); 
@@ -87,58 +103,15 @@ app.post("/entries", async (req, res) => {
       if (error) {
       return res.status(500).send({ error: error.message });
     }
-    //currently not doing anything
-    //TODO: Make this User Friendly
-    const formattedData = data.map(entry => {
-      if (entry.date) {
-        const dateVar = new Date("2021-09-24T12:38:54.656Z");
-        console.log(dateVar.toLocaleString());
-      }
-      return entry;
-    });
-
-    res.status(200).json(formattedData);
-  } catch (err) {
-    console.log(err); 
-    res.status(500).send({ error: 'Server error' });
-  }d
-});
-/*
-app.post("/users", async (req, res) => {
-  const {user_name, password_hash} = req.body;
-  try {
-    const { data, error } = await supabase
-      .from('users')
-      .insert({user_name, password_hash})
-      .select()
-
-      if (error) {
-      return res.status(500).send({ error: error.message });
-    }
-    res.status(200).send("SUCCESS");
   } catch (err) {
     console.log(err); 
     res.status(500).send({ error: 'Server error' });
   }
 });
-*/
 
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
-});
-
-
-app.post("/users", (req, res) => {
-  const user_name = req.body.user_name;
-  const password = req.body.password;
-  
-  make_new_user(user_name, password)
-    .then((success_result) => {
-      if (success_result) res.status(201).send();
-      else res.status(409).send();
-    })
-    .catch((error) => console.log(error));
 });
 
 //implement get users
