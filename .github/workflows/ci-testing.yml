@@ -15,4 +15,7 @@ jobs:
       - run: npm ci
       - run: npm run format
       - run: npm start
+      env:
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       - run: npm run build
+        
