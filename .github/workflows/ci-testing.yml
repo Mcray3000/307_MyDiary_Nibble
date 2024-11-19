@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+      - run: npm run lint
       - run: npm run format
       - run: |
           nohup npm start &
@@ -20,4 +21,3 @@ jobs:
         env:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       - run: npm run build
-        
