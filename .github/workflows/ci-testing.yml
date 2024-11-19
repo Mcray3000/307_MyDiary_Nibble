@@ -21,3 +21,13 @@ jobs:
         env:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       - run: npm run build
+
+  # Add a new job for commit verification
+  commit_verification:
+    needs: build # This job depends on the 'build' job
+    runs-on: ubuntu-latest
+    if: always() # Always run this job, even if 'build' fails
+    steps:
+      - name: Check build status
+        if: ${{ needs.build.result != 'success' }}
+        run: exit 1 # Fail this job if 'build' failed
