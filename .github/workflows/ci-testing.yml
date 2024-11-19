@@ -13,7 +13,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm lint
-      - run: npm format
+      - run: npm run format
       - run: npm start
-      - run: npm run dev
+      - run: npm run build
