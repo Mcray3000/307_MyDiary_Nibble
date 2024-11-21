@@ -37,16 +37,15 @@ function MainPage() {
       });
   }, []);
 
-    // Function to format the date
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
-        year: "numeric", // "yyyy"
-        month: "long", // "Month"
-        day: "numeric", // "dd"
-      });
-    };
-  
+  // Function to format the date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric", // "yyyy"
+      month: "long", // "Month"
+      day: "numeric", // "dd"
+    });
+  };
 
   return (
     <div className="main-page">
