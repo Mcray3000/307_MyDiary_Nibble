@@ -17,7 +17,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: "https://scribbleandnibble.vercel.app",
+  origin: "*",
   optionsSuccessStatus: 200,
 };
 
@@ -58,7 +58,6 @@ async function hash_password(password) {
 
 //not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
-  console.log(username, password);
   const hash = await hash_password(password);
   const { data, error } = await supabase
     .from("users")
@@ -138,7 +137,7 @@ app.post("/entries", async (req, res) => {
 });
 
 app.listen(8000, () => {
-  console.log(`Server running at https://three07-mydiary-nibble.onrender.com`);
+  console.log(`Server running at http://localhost:8000`);
 });
 
 app.get("/users", async (req, res) => {

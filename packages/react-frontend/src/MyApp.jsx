@@ -20,7 +20,7 @@ function MyApp() {
 
   function postUser(person) {
     console.log(JSON.stringify(person));
-    return fetch("https://three07-mydiary-nibble.onrender.com/users", {
+    return fetch("http://localhost:8000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,17 +30,20 @@ function MyApp() {
   }
 
   function checkUserLogin(person) {
-    return fetch("https://three07-mydiary-nibble.onrender.com/users/login", {
+    return fetch("http://localhost:8000/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(person),
+      body: JSON.stringify({
+        user_name: person.name,
+        password: person.password
+      }),
     })
   }
 
   function fetchUserByName(name) {
-    return fetch(`https://three07-mydiary-nibble.onrender.com/users?name=${name}`);
+    return fetch(`http://localhost:8000/users?name=${name}`);
   }
 
   function handleCreateUser(person) {
@@ -65,14 +68,13 @@ function MyApp() {
           throw new Error("Invalid username or password.");
         }
         else {
+          console.log(res);
           throw new Error("Some error happened. Please try again.");
         }
       }
       return res.json();
     });
   }
-
-  console.log("Characters in my app", characters);
 
   return (
     <Router>
