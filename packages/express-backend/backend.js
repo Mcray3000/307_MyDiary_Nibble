@@ -79,8 +79,7 @@ app.post("/users", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//returns entry given an id -> we have to pass in an id (see get /users/id)
-// alternatively pass in name for /entries/:name and then we can look up id for name and all entries associated
+//returns entry given an id
 app.get("/entries/:id", async (req, res) => {
   try {
     const { data, error } = await supabase
@@ -99,15 +98,34 @@ app.get("/entries/:id", async (req, res) => {
 //used to look up all public entries
 app.get("/entries/", async (req, res) => {
   const is_public = req.query.is_public ? req.query.is_public : "False";
-  try {
-    const { data, error } = await supabase.from("public_entries").select("*");
-    if (error) {
-      return res.status(500).send({ error: error.message });
+  const author = req.query.author
+  if (author === undefined) {
+    try {
+      const { data, error } = await supabase.from("public_entries").select("*");
+      if (error) {
+        return res.status(500).send({ error: error.message });
+      }
+      console.log(data);
+      res.status(200).send(data);
+    } catch (err) {
+      res.status(500).send({ error: "Server error" });
     }
-    console.log(data);
-    res.status(200).send(data);
-  } catch (err) {
-    res.status(500).send({ error: "Server error" });
+  } else {
+    // given a specific author return all entries by that author
+    // can be used to load a users homepage or calendar data
+    try {
+      const { data, error} = await supabase
+      .from("entries")
+      .select("*")
+      .eq("author", author);
+      if (error) {
+        return res.status(404).send("No entries found");
+      }
+      return res.status(200).send(data);
+    }
+    catch (err) {
+      return res.status(500).send("Server Error");
+    }
   }
 });
 
@@ -157,23 +175,6 @@ app.get("/users", async (req, res) => {
 
   return res.status(200).send(data);
 });
-
-app.get("/users/id"), async (req, res) => {
-  const name = req.query.name
-  try {
-    const { data, error} = await supabase
-    .from("users")
-    .select("id")
-    .eq("user_name", name);
-    
-    if (error) {
-      res.status(404).send("User not found");
-    }
-    res.status(200).send(data);
-  } catch (err) {
-    res.status(500).send("Server error");
-  }
-}
 
 app.post("/users/login", async (req, res) => {
   const user_name = req.body.user_name; // from form
