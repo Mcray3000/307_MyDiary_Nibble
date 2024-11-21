@@ -80,6 +80,7 @@ app.post("/users", (req, res) => {
 });
 
 //returns entry given an id -> we have to pass in an id (see get /users/id)
+// alternatively pass in name for /entries/:name and then we can look up id for name and all entries associated
 app.get("/entries/:id", async (req, res) => {
   try {
     const { data, error } = await supabase

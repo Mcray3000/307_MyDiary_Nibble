@@ -16,7 +16,6 @@ import MainPage from "./MainPage.jsx";
 import Discover from "./Discover.jsx";
 
 function MyApp() {
-  const [characters, setCharacters] = useState([]);
 
   function postUser(person) {
     console.log(JSON.stringify(person));
@@ -56,8 +55,6 @@ function MyApp() {
       return res.json();
     });
   }
-
-  console.log("Characters in my app", characters);
 
   return (
     <Router>
