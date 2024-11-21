@@ -29,16 +29,6 @@ function MyApp() {
     });
   }
 
-  function checkUserLogin(person) {
-    return fetch("https://three07-mydiary-nibble.onrender.com/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(person),
-    })
-  }
-
   function fetchUserByName(name) {
     return fetch(`https://three07-mydiary-nibble.onrender.com/users?name=${name}`);
   }
@@ -59,14 +49,9 @@ function MyApp() {
   }
 
   function handleLogin(person) {
-    return checkUserLogin(person).then((res) => {
+    return fetchUserByName(person.name).then((res) => {
       if (!res.ok) {
-        if (res.status == 401) {
-          throw new Error("Invalid username or password.");
-        }
-        else {
-          throw new Error("Some error happened. Please try again.");
-        }
+        throw new Error("Network response was not ok");
       }
       return res.json();
     });

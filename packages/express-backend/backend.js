@@ -40,11 +40,8 @@ function generate_access_token(username) {
   });
 }
 
-// app.use(cors());
-
 const numSaltRounds = Number(process.env.SALT_ROUNDS);
 
-// app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -56,7 +53,6 @@ async function hash_password(password) {
   return hash;
 }
 
-//not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
   console.log(username, password);
   const hash = await hash_password(password);
@@ -83,7 +79,7 @@ app.post("/users", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-//returns entry given an id
+//returns entry given an id -> we have to pass in an id (see get /users/id)
 app.get("/entries/:id", async (req, res) => {
   try {
     const { data, error } = await supabase
@@ -161,6 +157,23 @@ app.get("/users", async (req, res) => {
   return res.status(200).send(data);
 });
 
+app.get("/users/id"), async (req, res) => {
+  const name = req.query.name
+  try {
+    const { data, error} = await supabase
+    .from("users")
+    .select("id")
+    .eq("user_name", name);
+    
+    if (error) {
+      res.status(404).send("User not found");
+    }
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+}
+
 app.post("/users/login", async (req, res) => {
   const user_name = req.body.user_name; // from form
   const password = req.body.password;
@@ -190,4 +203,3 @@ app.post("/users/login", async (req, res) => {
 }
 });
 
-//export default { make_new_user };
