@@ -161,4 +161,33 @@ app.get("/users", async (req, res) => {
   return res.status(200).send(data);
 });
 
+app.post("/users/login", async (req, res) => {
+  const user_name = req.body.user_name; // from form
+  const password = req.body.password;
+  const hash = await supabase
+    .from("users")
+    .select("password_hash")
+    .eq("user_name", user_name);
+  if (hash["data"][0] == undefined) {
+  // invalid username
+  res.status(401).send("Unauthorized");
+  } else {
+  bcryptjs
+    .compare(password, hash["data"][0]["password_hash"])
+    .then((matched) => {
+      if (matched) {
+        generate_access_token(user_name).then((token) => {
+        res.status(200).send({ token: token });
+      });
+    } else {
+      // invalid password
+      res.status(401).send("Unauthorized");
+    }
+  })
+  .catch(() => {
+    res.status(401).send("Unauthorized");
+  });
+}
+});
+
 //export default { make_new_user };
