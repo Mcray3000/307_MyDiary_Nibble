@@ -30,7 +30,7 @@ function MyApp() {
   }
 
   function postUser(person) {
-    return fetch("http://localhost:8000/users", {
+    return fetch("https://three07-mydiary-nibble.onrender.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ function MyApp() {
   }
 
   function checkUserLogin(person) {
-    return fetch("http://localhost:8000/users/login", {
+    return fetch("https://three07-mydiary-nibble.onrender.com/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ function MyApp() {
   }
 
   function fetchUserByName(name) {
-    return fetch(`http://localhost:8000/users?name=${name}`);
+    return fetch(`https://three07-mydiary-nibble.onrender.com/users?name=${name}`);
   }
 
   function handleCreateUser(person) {

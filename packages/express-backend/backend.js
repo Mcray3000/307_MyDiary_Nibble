@@ -160,7 +160,7 @@ app.post("/entries", async (req, res) => {
 });
 
 app.listen(8000, () => {
-  console.log(`Server running at http://localhost:8000`);
+  console.log(`Server running at https://three07-mydiary-nibble.onrender.com`);
 });
 
 app.get("/users", async (req, res) => {
