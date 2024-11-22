@@ -19,7 +19,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200,
+  // credentials: true,
 };
+
+app.options("*", cors(corsOptions));
 
 app.use(cors(corsOptions));
 
