@@ -17,12 +17,29 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: ["https://scribbleandnibble.vercel.app", "http://localhost:5173"],
-  optionsSuccessStatus: 200,
-  // credentials: true,
-};
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://scribbleandnibble.vercel.app",
+      "http://localhost:5173",
+    ];
 
-app.options("*", cors(corsOptions));
+    // Allow requests from Vercel preview deployments
+    const isVercelPreviewDeployment =
+      origin && origin.startsWith("https://scribbleandnibble-");
+
+    if (
+      !origin ||
+      allowedOrigins.indexOf(origin) !== -1 ||
+      isVercelPreviewDeployment
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200,
+  //credentials: true // maybe we need this later
+};
 
 app.use(cors(corsOptions));
 
