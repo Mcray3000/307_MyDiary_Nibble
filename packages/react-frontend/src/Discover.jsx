@@ -9,7 +9,7 @@ function Discover() {
 
   useEffect(() => {
     // Fetch public entries from your backend API
-    fetch(`${process.env.BACKEND_URL}/entries?is_public=True`) // Adjust the endpoint as needed
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries?is_public=True`) // Adjust the endpoint as needed
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch public entries.");

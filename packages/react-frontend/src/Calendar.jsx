@@ -12,7 +12,7 @@ function Calendar() {
 
   //load all entries from db
   function getEntries() {
-    fetch(`${process.env.BACKEND_URL}/entries`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -17,7 +17,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: process.env.BACKEND_URL,
+  origin: process.env.VITE_BACKEND_URL,
   optionsSuccessStatus: 200,
 };
 
@@ -138,7 +138,7 @@ app.post("/entries", async (req, res) => {
 });
 
 app.listen(8000, () => {
-  console.log(`Server running at ${process.env.BACKEND_URL}`);
+  console.log(`Server running at ${process.env.VITE_BACKEND_URL}`);
 });
 
 app.get("/users", async (req, res) => {
@@ -169,25 +169,25 @@ app.post("/users/login", async (req, res) => {
     .select("password_hash")
     .eq("user_name", user_name);
   if (hash["data"][0] == undefined) {
-  // invalid username
-  res.status(401).send("Unauthorized");
-  } else {
-  bcryptjs
-    .compare(password, hash["data"][0]["password_hash"])
-    .then((matched) => {
-      if (matched) {
-        generate_access_token(user_name).then((token) => {
-        res.status(200).send({ token: token });
-      });
-    } else {
-      // invalid password
-      res.status(401).send("Unauthorized");
-    }
-  })
-  .catch(() => {
+    // invalid username
     res.status(401).send("Unauthorized");
-  });
-}
+  } else {
+    bcryptjs
+      .compare(password, hash["data"][0]["password_hash"])
+      .then((matched) => {
+        if (matched) {
+          generate_access_token(user_name).then((token) => {
+            res.status(200).send({ token: token });
+          });
+        } else {
+          // invalid password
+          res.status(401).send("Unauthorized");
+        }
+      })
+      .catch(() => {
+        res.status(401).send("Unauthorized");
+      });
+  }
 });
 
 //export default { make_new_user };

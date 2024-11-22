@@ -20,7 +20,7 @@ function MyApp() {
 
   function postUser(person) {
     console.log(JSON.stringify(person));
-    return fetch(`${process.env.BACKEND_URL}/users`, {
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,17 +30,17 @@ function MyApp() {
   }
 
   function checkUserLogin(person) {
-    return fetch(`${process.env.BACKEND_URL}/users/login`, {
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(person),
-    })
+    });
   }
 
   function fetchUserByName(name) {
-    return fetch(`${process.env.BACKEND_URL}/users?name=${name}`);
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/users?name=${name}`);
   }
 
   function handleCreateUser(person) {
@@ -63,8 +63,7 @@ function MyApp() {
       if (!res.ok) {
         if (res.status == 401) {
           throw new Error("Invalid username or password.");
-        }
-        else {
+        } else {
           throw new Error("Some error happened. Please try again.");
         }
       }
@@ -79,7 +78,6 @@ function MyApp() {
       <HamburgerMenu />
       <div className="container">
         <Routes>
-
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route
             path="/create"
