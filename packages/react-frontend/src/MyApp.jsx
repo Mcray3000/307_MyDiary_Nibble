@@ -20,7 +20,7 @@ function MyApp() {
 
   function postUser(person) {
     console.log(JSON.stringify(person));
-    return fetch("https://three07-mydiary-nibble.onrender.com/users", {
+    return fetch(`${process.env.BACKEND_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ function MyApp() {
   }
 
   function checkUserLogin(person) {
-    return fetch("https://three07-mydiary-nibble.onrender.com/users/login", {
+    return fetch(`${process.env.BACKEND_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ function MyApp() {
   }
 
   function fetchUserByName(name) {
-    return fetch(`https://three07-mydiary-nibble.onrender.com/users?name=${name}`);
+    return fetch(`${process.env.BACKEND_URL}/users?name=${name}`);
   }
 
   function handleCreateUser(person) {

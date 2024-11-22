@@ -66,7 +66,7 @@ function DiaryEntry() {
     };
 
     // Send the diary entry to your backend API
-    fetch("https://three07-mydiary-nibble.onrender.com/entries", {
+    fetch(`${process.env.BACKEND_URL}/entries`, {
       // Replace with your actual API endpoint
       method: "POST",
       headers: {
