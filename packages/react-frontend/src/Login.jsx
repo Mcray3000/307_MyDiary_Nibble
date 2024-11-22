@@ -23,7 +23,10 @@ function Login(props) {
   function submitForm() {
     props
       .handleLogin(person)
-      .then(() => navigate("/main"))
+      .then((res) => {
+        localStorage.setItem('username', person.name);
+        localStorage.setItem('token', res.token);
+        navigate("/login");})
       .catch((error) => {
         console.error("Login failed:", error);
         setLoginError(true); // Set login error state
