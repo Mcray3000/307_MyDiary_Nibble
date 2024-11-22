@@ -23,6 +23,31 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+export function authenticateUser(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  //Getting the 2nd part of the auth header (the token)
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    console.log("No token received");
+    res.status(401).end();
+  } else {
+    jwt.verify(
+      token,
+      process.env.TOKEN_SECRET,
+      (error, decoded) => {
+        if (decoded) {
+          console.log(decoded);
+          next();
+        } else {
+          console.log("JWT error:", error);
+          res.status(401).end();
+        }
+      }
+    );
+  }
+}
+
 function generate_access_token(username) {
   return new Promise((resolve, reject) => {
     jwt.sign(
@@ -106,7 +131,6 @@ app.get("/entries/", async (req, res) => {
     if (error) {
       return res.status(500).send({ error: error.message });
     }
-    console.log(data);
     res.status(200).send(data);
   } catch (err) {
     res.status(500).send({ error: "Server error" });
@@ -118,7 +142,6 @@ app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   // Set publish_date if status is 'published'
   const publish_date = status === "published" ? new Date().toISOString() : null;
-  console.log(req.body);
 
   try {
     const { data, error } = await supabase

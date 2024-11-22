@@ -18,8 +18,18 @@ import Discover from "./Discover.jsx";
 function MyApp() {
   const [characters, setCharacters] = useState([]);
 
+  function addAuthHeader(otherHeaders = {}) {
+    if (localStorage.getItem('token') === null || localStorage.getItem('token') === "") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      };
+    }
+  }
+
   function postUser(person) {
-    console.log(JSON.stringify(person));
     return fetch("http://localhost:8000/users", {
       method: "POST",
       headers: {
