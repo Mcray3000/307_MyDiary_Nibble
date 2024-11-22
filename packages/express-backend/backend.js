@@ -17,7 +17,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: process.env.VITE_BACKEND_URL,
+  origin: `*`,
   optionsSuccessStatus: 200,
 };
 
