@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import HamburgerMenu from "./HamburgerMenu";
 // there are modules for building calendars, but for our MVP we are hard coding the months of Nov, Dec 2024
 function Calendar() {
   const [month, setMonth] = useState("November 2024");
@@ -12,7 +13,7 @@ function Calendar() {
 
   //load all entries from db
   function getEntries() {
-    fetch(`${process.env.BACKEND_URL}/entries`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -716,6 +717,7 @@ function Calendar() {
 
   return (
     <div>
+      <HamburgerMenu />
       <CalendarHeader />
       {showPopUp && selectDate && (
         <DiaryPopUp

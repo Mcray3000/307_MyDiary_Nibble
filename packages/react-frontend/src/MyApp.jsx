@@ -16,11 +16,21 @@ import MainPage from "./MainPage.jsx";
 import Discover from "./Discover.jsx";
 
 function MyApp() {
-  const [characters, setCharacters] = useState([]);
+
+  function addAuthHeader(otherHeaders = {}) {
+    if (localStorage.getItem('token') === null || localStorage.getItem('token') === "") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      };
+    }
+  }
 
   function postUser(person) {
     console.log(JSON.stringify(person));
-    return fetch(`${process.env.BACKEND_URL}/users`, {
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,17 +40,20 @@ function MyApp() {
   }
 
   function checkUserLogin(person) {
-    return fetch(`${process.env.BACKEND_URL}/users/login`, {
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(person),
+      body: JSON.stringify({
+        user_name: person.name,
+        password: person.password
+      }),
     })
   }
 
   function fetchUserByName(name) {
-    return fetch(`${process.env.BACKEND_URL}/users?name=${name}`);
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/users?name=${name}`);
   }
 
   function handleCreateUser(person) {
@@ -72,14 +85,10 @@ function MyApp() {
     });
   }
 
-  console.log("Characters in my app", characters);
-
   return (
     <Router>
-      <HamburgerMenu />
       <div className="container">
         <Routes>
-
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route
             path="/create"

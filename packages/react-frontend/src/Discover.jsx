@@ -1,6 +1,7 @@
 // src/Discover.jsx
 import React, { useState, useEffect } from "react";
 import "./Discover.css";
+import HamburgerMenu from "./HamburgerMenu";
 
 function Discover() {
   const [entries, setEntries] = useState([]);
@@ -9,7 +10,7 @@ function Discover() {
 
   useEffect(() => {
     // Fetch public entries from your backend API
-    fetch(`${process.env.BACKEND_URL}/entries?is_public=True`) // Adjust the endpoint as needed
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries?is_public=True`) // Adjust the endpoint as needed
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch public entries.");
@@ -37,6 +38,7 @@ function Discover() {
 
   return (
     <div className="discover-page">
+      <HamburgerMenu />
       {" "}
       {/* Add a container for styling */}
       <div className="top-bar">

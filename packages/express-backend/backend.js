@@ -17,11 +17,56 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: process.env.BACKEND_URL,
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://scribbleandnibble.vercel.app",
+      "http://localhost:5173",
+    ];
+
+    // Allow requests from Vercel preview deployments
+    const isVercelPreviewDeployment =
+      origin && origin.startsWith("https://scribbleandnibble-");
+
+    if (
+      !origin ||
+      allowedOrigins.indexOf(origin) !== -1 ||
+      isVercelPreviewDeployment
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   optionsSuccessStatus: 200,
+  //credentials: true // maybe we need this later
 };
 
 app.use(cors(corsOptions));
+
+export function authenticateUser(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  //Getting the 2nd part of the auth header (the token)
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    console.log("No token received");
+    res.status(401).end();
+  } else {
+    jwt.verify(
+      token,
+      process.env.TOKEN_SECRET,
+      (error, decoded) => {
+        if (decoded) {
+          console.log(decoded);
+          next();
+        } else {
+          console.log("JWT error:", error);
+          res.status(401).end();
+        }
+      }
+    );
+  }
+}
 
 function generate_access_token(username) {
   return new Promise((resolve, reject) => {
@@ -40,11 +85,8 @@ function generate_access_token(username) {
   });
 }
 
-// app.use(cors());
-
 const numSaltRounds = Number(process.env.SALT_ROUNDS);
 
-// app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -56,9 +98,7 @@ async function hash_password(password) {
   return hash;
 }
 
-//not sure how to make the original "const make_new_user = () => {}" syntax work. Hopefully this will work the same
 async function make_new_user(username, password) {
-  console.log(username, password);
   const hash = await hash_password(password);
   const { data, error } = await supabase
     .from("users")
@@ -107,7 +147,6 @@ app.get("/entries/", async (req, res) => {
     if (error) {
       return res.status(500).send({ error: error.message });
     }
-    console.log(data);
     res.status(200).send(data);
   } catch (err) {
     res.status(500).send({ error: "Server error" });
@@ -119,7 +158,6 @@ app.post("/entries", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   // Set publish_date if status is 'published'
   const publish_date = status === "published" ? new Date().toISOString() : null;
-  console.log(req.body);
 
   try {
     const { data, error } = await supabase
@@ -138,7 +176,7 @@ app.post("/entries", async (req, res) => {
 });
 
 app.listen(8000, () => {
-  console.log(`Server running at ${process.env.BACKEND_URL}`);
+  console.log(`Server running at ${process.env.VITE_BACKEND_URL}`);
 });
 
 app.get("/users", async (req, res) => {
@@ -169,25 +207,24 @@ app.post("/users/login", async (req, res) => {
     .select("password_hash")
     .eq("user_name", user_name);
   if (hash["data"][0] == undefined) {
-  // invalid username
-  res.status(401).send("Unauthorized");
-  } else {
-  bcryptjs
-    .compare(password, hash["data"][0]["password_hash"])
-    .then((matched) => {
-      if (matched) {
-        generate_access_token(user_name).then((token) => {
-        res.status(200).send({ token: token });
-      });
-    } else {
-      // invalid password
-      res.status(401).send("Unauthorized");
-    }
-  })
-  .catch(() => {
+    // invalid username
     res.status(401).send("Unauthorized");
-  });
-}
+  } else {
+    bcryptjs
+      .compare(password, hash["data"][0]["password_hash"])
+      .then((matched) => {
+        if (matched) {
+          generate_access_token(user_name).then((token) => {
+            res.status(200).send({ token: token });
+          });
+        } else {
+          // invalid password
+          res.status(401).send("Unauthorized");
+        }
+      })
+      .catch(() => {
+        res.status(401).send("Unauthorized");
+      });
+  }
 });
 
-//export default { make_new_user };
