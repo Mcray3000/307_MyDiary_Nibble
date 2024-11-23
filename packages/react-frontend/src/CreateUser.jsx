@@ -25,8 +25,8 @@ function CreateUser(props) {
     props
       .handleSubmit(person)
       .then(() => {
-        // Handle success
-        navigate("/main");
+        // Handle success, return user to login for authentication
+        navigate("/");
       })
       .catch((error) => {
         // Handle error

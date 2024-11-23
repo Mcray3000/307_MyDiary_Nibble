@@ -8,6 +8,7 @@ import star from "./assets/Stared.svg";
 import unstar from "./assets/Unstared.svg";
 import send from "./assets/Send.svg";
 import sent from "./assets/SendHover.svg";
+import HamburgerMenu from "./HamburgerMenu";
 
 function DiaryEntry() {
   const [entry, setEntry] = useState("");
@@ -105,6 +106,7 @@ function DiaryEntry() {
 
   return (
     <div className="diary-container">
+      <HamburgerMenu />
       <div className="diary-header">
         <input
           type="text"
