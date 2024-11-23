@@ -16,7 +16,17 @@ import MainPage from "./MainPage.jsx";
 import Discover from "./Discover.jsx";
 
 function MyApp() {
-  const [characters, setCharacters] = useState([]);
+
+  function addAuthHeader(otherHeaders = {}) {
+    if (localStorage.getItem('token') === null || localStorage.getItem('token') === "") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      };
+    }
+  }
 
   function postUser(person) {
     console.log(JSON.stringify(person));
@@ -39,7 +49,7 @@ function MyApp() {
         user_name: person.name,
         password: person.password
       }),
-    });
+    })
   }
 
   function fetchUserByName(name) {
@@ -66,7 +76,8 @@ function MyApp() {
       if (!res.ok) {
         if (res.status == 401) {
           throw new Error("Invalid username or password.");
-        } else {
+        }
+        else {
           throw new Error("Some error happened. Please try again.");
         }
       }
@@ -74,11 +85,8 @@ function MyApp() {
     });
   }
 
-  console.log("Characters in my app", characters);
-
   return (
     <Router>
-      <HamburgerMenu />
       <div className="container">
         <Routes>
           <Route path="/" element={<Login handleLogin={handleLogin} />} />

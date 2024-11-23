@@ -1,6 +1,7 @@
 // src/MainPage.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import HamburgerMenu from "./HamburgerMenu";
 
 function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
@@ -49,6 +50,7 @@ function MainPage() {
 
   return (
     <div className="main-page">
+      <HamburgerMenu />
       <div className="top-bar">
         <div className="title-card">Nibble and Scribble</div>
       </div>

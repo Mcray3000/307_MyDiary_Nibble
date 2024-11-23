@@ -1,6 +1,7 @@
 // src/Discover.jsx
 import React, { useState, useEffect } from "react";
 import "./Discover.css";
+import HamburgerMenu from "./HamburgerMenu";
 
 function Discover() {
   const [entries, setEntries] = useState([]);
@@ -37,6 +38,7 @@ function Discover() {
 
   return (
     <div className="discover-page">
+      <HamburgerMenu />
       {" "}
       {/* Add a container for styling */}
       <div className="top-bar">
