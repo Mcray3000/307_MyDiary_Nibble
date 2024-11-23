@@ -22,7 +22,7 @@ function MainPage() {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    fetch(`${process.env.BACKEND_URL}/entries`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entries.");

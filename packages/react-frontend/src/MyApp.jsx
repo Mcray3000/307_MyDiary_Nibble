@@ -35,7 +35,10 @@ function MyApp() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(person),
+      body: JSON.stringify({
+        user_name: person.name,
+        password: person.password
+      }),
     });
   }
 
