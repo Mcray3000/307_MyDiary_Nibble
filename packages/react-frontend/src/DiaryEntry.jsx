@@ -105,82 +105,84 @@ function DiaryEntry() {
   };
 
   return (
-    <div className="diary-container">
+    <div>
       <HamburgerMenu />
-      <div className="diary-header">
-        <input
-          type="text"
-          className="diary-title"
-          placeholder="Insert title"
-          value={title}
-          onChange={handleTitleChange}
-        />
-        <div className="diary-status">
-          <span className={`diary-private ${isPrivate ? "private" : "public"}`}>
-            {isPrivate ? "Private" : "Public"}
-          </span>
-          <span className="diary-edit">
-            Last edited {lastEdited ? lastEdited : "xx/xx/xxxx"}
-          </span>
+        <div className="diary-container">
+          <div className="diary-header">
+            <input
+              type="text"
+              className="diary-title"
+              placeholder="Insert title"
+              value={title}
+              onChange={handleTitleChange}
+            />
+            <div className="diary-status">
+              <span className={`diary-private ${isPrivate ? "private" : "public"}`}>
+                {isPrivate ? "Private" : "Public"}
+              </span>
+              <span className="diary-edit">
+                Last edited {lastEdited ? lastEdited : "xx/xx/xxxx"}
+              </span>
+            </div>
+          </div>
+          <form className="diary-form">
+            {" "}
+            {/* No need for onSubmit here */}
+            <textarea
+              value={entry}
+              onChange={handleChange}
+              placeholder="Scribble here..."
+              rows="10"
+              cols="50"
+              required
+            />
+            {/* ... your toolbar ... */}
+            <div className="diary-footer">
+              <button type="button" className="form-button" onClick={handleSave}>
+                Save
+              </button>
+              <button type="button" className="diary-button" onClick={handleTrash}>
+                <img
+                  src={send}
+                  alt="Share"
+                  onMouseOver={(e) => (e.currentTarget.src = sent)}
+                  onMouseOut={(e) => (e.currentTarget.src = send)}
+                />
+              </button>
+              <button
+                type="button"
+                className="diary-button"
+                onClick={handleLock}
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                <img
+                  src={isPrivate ? lock : unlock}
+                  alt="Lock"
+                  onMouseOut={(e) =>
+                    (e.currentTarget.src = isPrivate ? lock : unlock)
+                  }
+                />
+              </button>
+              <button type="button" className="diary-button" onClick={handleStar}>
+                <img
+                  src={isFavorite ? star : unstar}
+                  alt="Star"
+                  onMouseOut={(e) =>
+                    (e.currentTarget.src = isFavorite ? star : unstar)
+                  }
+                />
+              </button>
+              <button type="button" className="diary-button" onClick={handleTrash}>
+                <img
+                  src={closedtrash}
+                  alt="Trash"
+                  onMouseOver={(e) => (e.currentTarget.src = opentrash)}
+                  onMouseOut={(e) => (e.currentTarget.src = closedtrash)}
+                />
+              </button>
+            </div>
+          </form>
         </div>
-      </div>
-      <form className="diary-form">
-        {" "}
-        {/* No need for onSubmit here */}
-        <textarea
-          value={entry}
-          onChange={handleChange}
-          placeholder="Scribble here..."
-          rows="10"
-          cols="50"
-          required
-        />
-        {/* ... your toolbar ... */}
-        <div className="diary-footer">
-          <button type="button" className="form-button" onClick={handleSave}>
-            Save
-          </button>
-          <button type="button" className="diary-button" onClick={handleTrash}>
-            <img
-              src={send}
-              alt="Share"
-              onMouseOver={(e) => (e.currentTarget.src = sent)}
-              onMouseOut={(e) => (e.currentTarget.src = send)}
-            />
-          </button>
-          <button
-            type="button"
-            className="diary-button"
-            onClick={handleLock}
-            onMouseDown={(e) => e.preventDefault()}
-          >
-            <img
-              src={isPrivate ? lock : unlock}
-              alt="Lock"
-              onMouseOut={(e) =>
-                (e.currentTarget.src = isPrivate ? lock : unlock)
-              }
-            />
-          </button>
-          <button type="button" className="diary-button" onClick={handleStar}>
-            <img
-              src={isFavorite ? star : unstar}
-              alt="Star"
-              onMouseOut={(e) =>
-                (e.currentTarget.src = isFavorite ? star : unstar)
-              }
-            />
-          </button>
-          <button type="button" className="diary-button" onClick={handleTrash}>
-            <img
-              src={closedtrash}
-              alt="Trash"
-              onMouseOver={(e) => (e.currentTarget.src = opentrash)}
-              onMouseOut={(e) => (e.currentTarget.src = closedtrash)}
-            />
-          </button>
-        </div>
-      </form>
     </div>
   );
 }
