@@ -12,7 +12,7 @@ function Calendar() {
 
   //load all entries from db
   function getEntries() {
-    fetch("https://three07-mydiary-nibble.onrender.com/entries", {
+    fetch(`${process.env.BACKEND_URL}/entries`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

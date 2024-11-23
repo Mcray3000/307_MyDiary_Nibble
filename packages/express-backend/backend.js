@@ -17,7 +17,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsOptions = {
-  origin: "*",
+  origin: process.env.BACKEND_URL,
   optionsSuccessStatus: 200,
 };
 
@@ -160,7 +160,7 @@ app.post("/entries", async (req, res) => {
 });
 
 app.listen(8000, () => {
-  console.log(`Server running at https://three07-mydiary-nibble.onrender.com`);
+  console.log(`Server running at ${process.env.BACKEND_URL}`);
 });
 
 app.get("/users", async (req, res) => {

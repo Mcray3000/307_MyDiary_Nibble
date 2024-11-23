@@ -22,7 +22,7 @@ function MainPage() {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    fetch("https://three07-mydiary-nibble.onrender.com/entries")
+    fetch(`${process.env.BACKEND_URL}/entries`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entries.");
