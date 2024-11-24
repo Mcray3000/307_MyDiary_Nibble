@@ -67,7 +67,7 @@ function DiaryEntry() {
     };
 
     // Send the diary entry to your backend API
-    fetch(`${process.env.BACKEND_URL}/entries`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
       // Replace with your actual API endpoint
       method: "POST",
       headers: {
