@@ -2134,5 +2134,14 @@ caption {
 }
 
 /**
-   * Layout
+   * ERROR
    */
+
+.error-message {
+  font-family: "Comic Sans MS", cursive;
+  color: rgb(
+    42,
+    18,
+    7
+  ); /* Optional: add a red color to make it more noticeable */
+}

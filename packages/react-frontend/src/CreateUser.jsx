@@ -34,7 +34,7 @@ function CreateUser(props) {
 
   function validateUsername(username) {
     if (username.length < 1) {
-      setUsernameError("Username to short :(");
+      setUsernameError("U53RN4M3 2 5H0R7 :(");
     } else {
       setUsernameError(null);
     }
@@ -69,11 +69,11 @@ function CreateUser(props) {
   function strengthMessage(strength) {
     switch (strength) {
       case 0:
-        return "password too weak :(";
+        return "P455W0RD 2 W34K :(";
       case 1:
-        return "password too weak :(";
+        return "P455W0RD 2 W34K :(";
       case 2:
-        return "password too weak :(";
+        return "P455W0RD 2 W34K :(";
       case 3:
         return null;
       case 4:
