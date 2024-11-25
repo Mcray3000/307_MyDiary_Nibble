@@ -12,6 +12,12 @@ function Login(props) {
 
   const navigate = useNavigate();
 
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+      submitForm();
+    }
+  }
+
   function handleChange(event) {
     const { name, value } = event.target;
     setPerson((prevPerson) => ({
@@ -60,6 +66,7 @@ function Login(props) {
           id="password"
           value={person.password}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           className="form-input"
           placeholder="password"
         />
