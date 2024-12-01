@@ -62,8 +62,7 @@ function MainPage() {
               className="entry-card"
             >
               <div className="entry-title">{entry.title}</div>{" "}
-              <div className="entry-author">Author: {entry.user_id}</div>
-              <div className="entry-date">
+              <div className="entry-date">Published:
                 {formatDate(entry.publish_date)}
               </div>{" "}
             </Link>
