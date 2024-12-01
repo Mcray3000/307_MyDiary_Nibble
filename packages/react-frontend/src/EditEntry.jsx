@@ -94,7 +94,7 @@ function EditEntry() {
     // Send the updated entry to your backend API (PUT request)
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
       // Use the ID in the URL
-      method: "PUT", // Or PATCH if you're doing partial updates
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
