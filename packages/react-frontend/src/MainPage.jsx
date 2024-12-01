@@ -5,15 +5,7 @@ import HamburgerMenu from "./HamburgerMenu";
 
 function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
-  const [entries, setEntries] = useState([
-    {
-      user_id: "1", // You can use any unique identifier here
-      title: "Your First Scribble",
-      author: "You", // Replace with your name or a username
-      date: "2024-11-13T12:00:00.000Z", // Example date
-    },
-    // Add more entries as needed
-  ]);
+  const [entries, setEntries] = useState([]);
 
   useEffect(() => {
     const today = new Date();

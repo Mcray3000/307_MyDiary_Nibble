@@ -84,7 +84,7 @@ function EditEntry() {
     }
 
     const updatedEntry = {
-      user_id: 96, // Replace with actual user ID
+      user_id,
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
