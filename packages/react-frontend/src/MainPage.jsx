@@ -7,7 +7,7 @@ function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
   const [entries, setEntries] = useState([
     {
-      _id: "1", // You can use any unique identifier here
+      user_id: "1", // You can use any unique identifier here
       title: "Your First Scribble",
       author: "You", // Replace with your name or a username
       date: "2024-11-13T12:00:00.000Z", // Example date
@@ -64,11 +64,17 @@ function MainPage() {
         <div className="entries-grid">
           {/* Map through the 'entries' state to display previous entries */}
           {entries.map((entry, index) => (
-            <div key={index} className="entry-card">
+            <Link
+              key={entry.entry_id}
+              to={`/edit/${entry.entry_id}`}
+              className="entry-card"
+            >
               <div className="entry-title">{entry.title}</div>{" "}
-              <div className="entry-author">Author: {entry.author}</div>
-              <div className="entry-date">{formatDate(entry.date)}</div>{" "}
-            </div>
+              <div className="entry-author">Author: {entry.user_id}</div>
+              <div className="entry-date">
+                {formatDate(entry.publish_date)}
+              </div>{" "}
+            </Link>
           ))}
         </div>
       </div>
