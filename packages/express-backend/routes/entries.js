@@ -48,12 +48,7 @@ router.get("/:entry_id", async (req, res) => {
       res.status(200).send(data);
     } catch (err) {
       res.status(500).send({ error: "Server error" });
-
     }
-    res.status(200).send(data);
-  } catch (err) {
-    res.status(500).send({ error: "Server error" });
-  }
 });
 
 //used to look up all public entries
@@ -114,11 +109,6 @@ router.get("/:entry_id", async (req, res) => {
       console.log(err);
       res.status(500).send({ error: "Server error" });
     }
-    res.status(201).send(data);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ error: "Server error" });
-  }
 });
 
 export default router;
