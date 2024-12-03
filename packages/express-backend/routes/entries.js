@@ -27,6 +27,22 @@ router.get("/home", authenticateUser, async (req, res) => {
   }
 });
 
+router.get("/home", authenticateUser, async (req, res) => {
+  console.log(req.user_name);
+  try {
+    const { data, error } = await supabase
+      .from("main_page")
+      .select("*")
+      .eq("user_name", req.user_name);
+    if (error) {
+      res.status(400).send({ error: error.message });
+    }
+    res.status(200).send(data);
+    } catch (err) {
+    res.status.send({ error: "Server error " });
+  }
+});
+
 //returns entry given an id
 router.get("/:entry_id", async (req, res) => {
   try {

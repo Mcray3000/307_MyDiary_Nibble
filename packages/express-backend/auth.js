@@ -19,7 +19,6 @@ export function authenticateUser(req, res, next) {
         }
         const user_name = decoded.username;
         req.user_name = user_name;
-        console.log(req.user_name);
         next();
         }
     );
