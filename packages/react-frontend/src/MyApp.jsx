@@ -14,16 +14,20 @@ import CreateUser from "./CreateUser.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
 import MainPage from "./MainPage.jsx";
 import Discover from "./Discover.jsx";
+import EditEntry from "./EditEntry.jsx";
+import ViewEntry from "./ViewEntry.jsx";
 
 function MyApp() {
-
   function addAuthHeader(otherHeaders = {}) {
-    if (localStorage.getItem('token') === null || localStorage.getItem('token') === "") {
+    if (
+      localStorage.getItem("token") === null ||
+      localStorage.getItem("token") === ""
+    ) {
       return otherHeaders;
     } else {
       return {
         ...otherHeaders,
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       };
     }
   }
@@ -46,42 +50,38 @@ function MyApp() {
       },
       body: JSON.stringify({
         user_name: person.name,
-        password: person.password
+        password: person.password,
       }),
-    })
+    });
   }
 
   function fetchUserByName(name) {
     return fetch(`${import.meta.env.VITE_BACKEND_URL}/users?name=${name}`);
   }
 
-  function handleCreateUser(person) {
-    return postUser(person).then((res) => {
-      if (!res.ok) {
-        // Handle error based on response status or returned JSON
-        if (res.status === 403) {
-          throw new Error("Username already exists.");
-        } else {
-          throw new Error("Failed to create user.");
-        }
+  async function handleCreateUser(person) {
+    const res = await postUser(person);
+    if (!res.ok) {
+      // Handle error based on response status or returned JSON
+      if (res.status === 403) {
+        throw new Error("Username already exists.");
+      } else {
+        throw new Error("Failed to create user.");
       }
-      // No need to parse JSON here since the response is a simple message
-      return true; // Indicate successful user creation
-    });
+    }
+    return true;
   }
 
-  function handleLogin(person) {
-    return checkUserLogin(person).then((res) => {
-      if (!res.ok) {
-        if (res.status == 401) {
-          throw new Error("Invalid username or password.");
-        }
-        else {
-          throw new Error("Some error happened. Please try again.");
-        }
+  async function handleLogin(person) {
+    const res = await checkUserLogin(person);
+    if (!res.ok) {
+      if (res.status == 401) {
+        throw new Error("Invalid username or password.");
+      } else {
+        throw new Error("Some error happened. Please try again.");
       }
-      return res.json();
-    });
+    }
+    return await res.json();
   }
 
   return (
@@ -93,10 +93,12 @@ function MyApp() {
             path="/create"
             element={<CreateUser handleSubmit={handleCreateUser} />}
           />
-          <Route path="/main" element={<MainPage />} />
+          <Route path="/main" element={<MainPage addAuth={addAuthHeader} />} />
           <Route path="/diary" element={<DiaryEntry />} />
+          <Route path="/edit/:id" element={<EditEntry />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/discover/:id" element={<ViewEntry />} />
         </Routes>
       </div>
     </Router>
