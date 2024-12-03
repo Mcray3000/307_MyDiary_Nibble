@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 // there are modules for building calendars, but for our MVP we are hard coding the months of Nov, Dec 2024
-function Calendar() {
+function Calendar(props) {
   const [month, setMonth] = useState("November 2024");
   const [diaryEntries, setDiaryEntires] = useState({});
   const [selectDate, setSelectedDate] = useState(null);
@@ -13,11 +13,11 @@ function Calendar() {
 
   //load all entries from db
   function getEntries() {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`, {
       method: "GET",
-      headers: {
+      headers: props.addAuth({
         "Content-Type": "application/json",
-      },
+      }),
     })
       .then((response) => response.json())
       // format timestamps to fetch entries by date only
