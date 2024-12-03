@@ -18,12 +18,12 @@ function EditEntry() {
   const navigate = useNavigate(); // For redirecting after saving
   const [entry, setEntry] = useState("");
   const [title, setTitle] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isFavorite, setIsFavorite] = useState();
   const [lastEdited, setLastEdited] = useState(null);
 
   useEffect(() => {
-    // Fetch the entry to edit using the ID
+    // Fetch the entry to edit using the entry_id
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`)
       .then((res) => {
         if (!res.ok) {
@@ -36,7 +36,7 @@ function EditEntry() {
         console.log("API response: ", data, "id: ", id);
         setTitle(data[0].title);
         setEntry(data[0].entry);
-        setIsPrivate(data[0].is_public === "false");
+        setIsPrivate(!data[0].is_public);
       })
       .catch((error) => {
         console.error("Error fetching entry:", error);

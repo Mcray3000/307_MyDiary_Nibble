@@ -82,7 +82,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const { user_id, title, entry, is_public, status } = req.body;
   // Set publish_date if status is 'published'
-  const publish_date = status === "published" ? new Date().toISOString() : null;
+  const publish_date = new Date().toISOString();
   console.log(req.body);
 
   try {

@@ -54,8 +54,7 @@ function ViewEntry() {
           <div className="diary-title">{title}</div>
         </div>
         <div className="diary-form">
-          {" "}
-          <div>{entry}</div>
+          <textarea value={entry} readOnly />
           <div className="diary-footer">
             <button type="button" className="diary-button">
               <img
