@@ -16,9 +16,8 @@ function MainPage(props) {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    // ${username}
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`, {
-      method: "GET",
+      method: 'GET',
       headers: props.addAuth(),
     })
       .then((res) => {
