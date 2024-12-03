@@ -26,11 +26,48 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//returns entry given an username
+router.get("/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    // const { data: usersData, error: usersError } = await supabase
+    //   .from("users")
+    //   .select("id")
+    //   .eq("user_name", username);
+
+    // if (usersError) {
+    //   console.error("Error fetching user ID:", usersError);
+    //   return res.status(500).send({ error: usersError.message });
+    // }
+
+    // if (usersData.length === 0) {
+    //   return res.status(404).send({ error: "User not found" });
+    // }
+
+    // const userId = usersData[0].id;
+
+    const { data, error } = await supabase
+      .from("entries")
+      .select("*")
+      .eq("user_id", 125);
+    if (error) {
+      return res.status(500).send({ error: error.message });
+    }
+    console.log(data);
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send({ error: "Server error" });
+  }
+});
+
 //used to look up all public entries
 router.get("/", async (req, res) => {
   const is_public = req.query.is_public ? req.query.is_public : "False";
   try {
-    const { data, error } = await supabase.from("entries").select("*");
+    const { data, error } = await supabase
+      .from("entries")
+      .select("*")
+      .eq("user_id", 125);
     if (error) {
       return res.status(500).send({ error: error.message });
     }
@@ -66,14 +103,15 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { user_id, title, entry, is_public, status } = req.body;
+  const { title, entry, is_public, status } = req.body;
 
   try {
     const { data, error } = await supabase
       .from("entries")
-      .update({ user_id, title, entry, is_public, status })
+      .update({ title, entry, is_public, status })
       .eq("entry_id", id)
-      .select();
+      .select()
+      .single();
 
     if (error) {
       return res.status(500).send({ error: error.message });

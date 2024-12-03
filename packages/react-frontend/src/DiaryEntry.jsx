@@ -1,5 +1,6 @@
 // src/DiaryEntry.jsx
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import closedtrash from "./assets/ClosedTrash.svg";
 import opentrash from "./assets/OpenTrash.svg";
 import lock from "./assets/Lock.svg";
@@ -16,6 +17,7 @@ function DiaryEntry() {
   const [entry, setEntry] = useState("");
   const [title, setTitle] = useState("");
   const [isPrivate, setIsPrivate] = useState(true); // Initially private
+  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isShare, setIsShare] = useState(false);
   const [lastEdited, setLastEdited] = useState(null);
@@ -66,7 +68,7 @@ function DiaryEntry() {
 
     // Prepare the diary entry object
     const diaryEntry = {
-      user_id: 96, // Temporary static ID of user_name 'MiladRocks249'; update with authenticated user ID when available
+      user_id: 125, // Temporary static ID of user_name 'MiladRocks249'; update with authenticated user ID when available
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
@@ -85,6 +87,7 @@ function DiaryEntry() {
         if (!res.ok) {
           throw new Error("Failed to save scribble.");
         }
+        navigate("/main");
         // console.log("Scribble saved successfully!");
       })
       .catch((error) => {
@@ -145,7 +148,21 @@ function DiaryEntry() {
           />
           {/* ... your toolbar ... */}
           <div className="diary-footer">
-            <button type="button" className="diary-button" onClick={handleSave}>
+            <button
+              type="button"
+              className="diary-button"
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "Are you sure you want to save? " +
+                      "If your entry is public it will " +
+                      "be saved on the public page."
+                  )
+                ) {
+                  handleSave();
+                }
+              }}
+            >
               <img
                 src={save}
                 alt="Share"

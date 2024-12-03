@@ -48,13 +48,16 @@ function Discover() {
       {/* Title for all entry cards */}
       <div className="entries-grid">
         {entries.map((entry) => (
-          <div key={entry._id || entry.title} className="entry-card">
-            {" "}
-            {/* Assuming your entries have an _id property */}
-            <div className="entry-title">{entry.title}</div>
-            <div className="entry-author">Author: {entry.author}</div>{" "}
-            <div className="entry-date">Date: {formatDate(entry.date)}</div>{" "}
-          </div>
+          <Link
+          key={entry.entry_id}
+          to={`/edit/${entry.entry_id}`}
+          className="entry-card"
+        >
+          <div className="entry-title">{entry.title}</div>{" "}
+          <div className="entry-date">
+            Published: {" " + formatDate(entry.publish_date)}
+          </div>{" "}
+        </Link>
         ))}
       </div>
     </div>

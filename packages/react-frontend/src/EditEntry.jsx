@@ -33,15 +33,15 @@ function EditEntry() {
       })
       .then((data) => {
         // Assuming your API returns an object with title, entry, etc.
-        console.log("API response is not in the expected format:", data);
+        console.log("API response: ", data, "id: ", id);
         setTitle(data[0].title);
         setEntry(data[0].entry);
-        setIsPrivate(data[0].is_public === "false"); // Adjust based on your API response
+        setIsPrivate(data[0].is_public === "false");
       })
       .catch((error) => {
         console.error("Error fetching entry:", error);
       });
-  }, [id]); // Run this effect whenever the 'id' changes
+  }, [id]);
 
   useEffect(() => {
     const updateLastEdited = () => {
@@ -84,7 +84,7 @@ function EditEntry() {
     }
 
     const updatedEntry = {
-      user_id,
+      user_id: 125,
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
@@ -129,7 +129,6 @@ function EditEntry() {
     <div>
       <HamburgerMenu />
       <div className="diary-container">
-        {/* ... (rest of your component, similar to DiaryEntry) ... */}
         <div className="diary-header">
           <input
             type="text"
@@ -161,7 +160,21 @@ function EditEntry() {
           />
           {/* ... your toolbar ... */}
           <div className="diary-footer">
-            <button type="button" className="diary-button" onClick={handleSave}>
+            <button
+              type="button"
+              className="diary-button"
+              onClick={() => {
+                if (
+                  window.confirm(
+                    "Are you sure you want to save? " +
+                      "If your entry is public it will " +
+                      "be saved on the public page."
+                  )
+                ) {
+                  handleSave();
+                }
+              }}
+            >
               <img
                 src={save}
                 alt="Share"

@@ -15,6 +15,7 @@ import HamburgerMenu from "./HamburgerMenu.jsx";
 import MainPage from "./MainPage.jsx";
 import Discover from "./Discover.jsx";
 import EditEntry from "./EditEntry.jsx";
+import ViewEntry from "./ViewEntry.jsx";
 
 function MyApp() {
   function addAuthHeader(otherHeaders = {}) {
@@ -100,6 +101,7 @@ function MyApp() {
           <Route path="/edit/:id" element={<EditEntry />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/discover/:id" element={<ViewEntry />} />
         </Routes>
       </div>
     </Router>

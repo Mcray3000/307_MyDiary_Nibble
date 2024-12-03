@@ -6,6 +6,7 @@ import HamburgerMenu from "./HamburgerMenu";
 function MainPage() {
   const [currentDate, setCurrentDate] = useState("");
   const [entries, setEntries] = useState([]);
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const today = new Date();
@@ -15,6 +16,7 @@ function MainPage() {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
+    // ${username}
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`)
       .then((res) => {
         if (!res.ok) {
@@ -39,6 +41,10 @@ function MainPage() {
       day: "numeric", // "dd"
     });
   };
+  // for (let i = 0; i < localStorage.length; i++) {
+  //   let key = localStorage.key(i);
+  //   console.log(`${key}: ${localStorage.getItem(key)}`);
+  // }
 
   return (
     <div className="main-page">
