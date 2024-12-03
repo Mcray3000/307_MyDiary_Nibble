@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./Discover.css";
 import HamburgerMenu from "./HamburgerMenu";
+import { Link } from "react-router-dom";
 
 function Discover() {
   const [entries, setEntries] = useState([]);
@@ -38,9 +39,7 @@ function Discover() {
 
   return (
     <div className="discover-page">
-      <HamburgerMenu />
-      {" "}
-      {/* Add a container for styling */}
+      <HamburgerMenu /> {/* Add a container for styling */}
       <div className="top-bar">
         <div className="title-card">Public Scribbles</div>
       </div>
@@ -49,15 +48,16 @@ function Discover() {
       <div className="entries-grid">
         {entries.map((entry) => (
           <Link
-          key={entry.entry_id}
-          to={`/edit/${entry.entry_id}`}
-          className="entry-card"
-        >
-          <div className="entry-title">{entry.title}</div>{" "}
-          <div className="entry-date">
-            Published: {" " + formatDate(entry.publish_date)}
-          </div>{" "}
-        </Link>
+            key={entry.entry_id}
+            to={`/discover/${entry.entry_id}`}
+            className="entry-card"
+          >
+            {" "}
+            {/* Assuming your entries have an _id property */}
+            <div className="entry-title">{entry.title}</div>
+            <div className="entry-author">Author: {entry.author}</div>{" "}
+            <div className="entry-date">Date: {formatDate(entry.date)}</div>{" "}
+          </Link>
         ))}
       </div>
     </div>

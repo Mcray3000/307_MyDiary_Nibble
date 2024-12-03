@@ -7,11 +7,12 @@ import send from "./assets/Send.svg";
 import sent from "./assets/SendHover.svg";
 import HamburgerMenu from "./HamburgerMenu";
 
-function EditEntry() {
+function ViewEntry() {
   const { id } = useParams(); // Get the entry ID from the URL
   const navigate = useNavigate(); // For redirecting after saving
   const [entry, setEntry] = useState("");
   const [title, setTitle] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     // Fetch the entry to edit using the ID
@@ -49,37 +50,12 @@ function EditEntry() {
     <div>
       <HamburgerMenu />
       <div className="diary-container">
-        {/* ... (rest of your component, similar to DiaryEntry) ... */}
         <div className="diary-header">
-          <input
-            type="text"
-            className="diary-title"
-            placeholder="Insert title"
-            value={title}
-            onChange={handleTitleChange}
-          />
-          <div className="diary-status">
-            <span
-              className={`diary-private ${isPrivate ? "private" : "public"}`}
-            >
-              {isPrivate ? "Private" : "Public"}
-            </span>
-            <span className="diary-edit">
-              Last edited {lastEdited ? lastEdited : "xx/xx/xxxx"}
-            </span>
-          </div>
+          <div className="diary-title">{title}</div>
         </div>
-        <form className="diary-form">
+        <div className="diary-form">
           {" "}
-          <textarea
-            value={entry}
-            onChange={handleChange}
-            placeholder="Scribble here..."
-            rows="10"
-            cols="50"
-            required
-          />
-          {/* ... your toolbar ... */}
+          <div>{entry}</div>
           <div className="diary-footer">
             <button type="button" className="diary-button">
               <img
@@ -99,10 +75,10 @@ function EditEntry() {
               />
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 }
 
-export default EditEntry;
+export default ViewEntry;
