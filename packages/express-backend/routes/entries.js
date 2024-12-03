@@ -12,9 +12,27 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 router.get("/home", authenticateUser, async (req, res) => {
-  console.log("Hello, from /home");
   console.log(req.user_name);
-  res.status(200).send({});
+  try {
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("user_name", req.user_name);
+    if (userError) {
+      return res.status(500).send({ error: userError.message});
+    }
+    const user_id = userData[0].id
+    const { data: entriesData, error: entriesError } = await supabase
+      .from("entries")
+      .select("*")
+      .eq("user_id", user_id);
+    if (entriesError) {
+      return res.status(204).send({ error: entriesError.message });
+    }
+    res.status(200).send(entriesData);
+  } catch (err) {
+    res.status.send({ error: "Server error "});
+  }
 });
 
 //returns entry given an id
