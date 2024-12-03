@@ -5,15 +5,8 @@ import HamburgerMenu from "./HamburgerMenu";
 
 function MainPage(props) {
   const [currentDate, setCurrentDate] = useState("");
-  const [entries, setEntries] = useState([
-    {
-      _id: "1", // You can use any unique identifier here
-      title: "Your First Scribble",
-      author: "You", // Replace with your name or a username
-      date: "2024-11-13T12:00:00.000Z", // Example date
-    },
-    // Add more entries as needed
-  ]);
+  const [entries, setEntries] = useState([]);
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const today = new Date();
@@ -50,6 +43,10 @@ function MainPage(props) {
       day: "numeric", // "dd"
     });
   };
+  // for (let i = 0; i < localStorage.length; i++) {
+  //   let key = localStorage.key(i);
+  //   console.log(`${key}: ${localStorage.getItem(key)}`);
+  // }
 
   return (
     <div className="main-page">
@@ -67,11 +64,16 @@ function MainPage(props) {
         <div className="entries-grid">
           {/* Map through the 'entries' state to display previous entries */}
           {entries.map((entry, index) => (
-            <div key={index} className="entry-card">
+            <Link
+              key={entry.entry_id}
+              to={`/edit/${entry.entry_id}`}
+              className="entry-card"
+            >
               <div className="entry-title">{entry.title}</div>{" "}
-              <div className="entry-author">Author: {entry.author}</div>
-              <div className="entry-date">{formatDate(entry.date)}</div>{" "}
-            </div>
+              <div className="entry-date">
+                Published: {" " + formatDate(entry.publish_date)}
+              </div>{" "}
+            </Link>
           ))}
         </div>
       </div>

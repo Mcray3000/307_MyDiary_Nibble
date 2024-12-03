@@ -14,22 +14,25 @@ import CreateUser from "./CreateUser.jsx";
 import HamburgerMenu from "./HamburgerMenu.jsx";
 import MainPage from "./MainPage.jsx";
 import Discover from "./Discover.jsx";
+import EditEntry from "./EditEntry.jsx";
+import ViewEntry from "./ViewEntry.jsx";
 
 function MyApp() {
-
   function addAuthHeader(otherHeaders = {}) {
-    if (localStorage.getItem('token') === null || localStorage.getItem('token') === "") {
+    if (
+      localStorage.getItem("token") === null ||
+      localStorage.getItem("token") === ""
+    ) {
       return otherHeaders;
     } else {
       return {
         ...otherHeaders,
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       };
     }
   }
 
   function postUser(person) {
-    console.log(JSON.stringify(person));
     return fetch(`${import.meta.env.VITE_BACKEND_URL}/users`, {
       method: "POST",
       headers: {
@@ -47,9 +50,9 @@ function MyApp() {
       },
       body: JSON.stringify({
         user_name: person.name,
-        password: person.password
+        password: person.password,
       }),
-    })
+    });
   }
 
   function fetchUserByName(name) {
@@ -74,8 +77,7 @@ function MyApp() {
     if (!res.ok) {
       if (res.status == 401) {
         throw new Error("Invalid username or password.");
-      }
-      else {
+      } else {
         throw new Error("Some error happened. Please try again.");
       }
     }
@@ -93,8 +95,10 @@ function MyApp() {
           />
           <Route path="/main" element={<MainPage addAuth={addAuthHeader} />} />
           <Route path="/diary" element={<DiaryEntry />} />
+          <Route path="/edit/:id" element={<EditEntry />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/discover/:id" element={<ViewEntry />} />
         </Routes>
       </div>
     </Router>

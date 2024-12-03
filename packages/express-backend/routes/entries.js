@@ -1,7 +1,7 @@
-//entries.js 
+//entries.js
 
 import express from "express";
-const router = express.Router()
+const router = express.Router();
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 import { authenticateUser } from "../auth.js";
@@ -48,10 +48,15 @@ router.get("/:entry_id", async (req, res) => {
       res.status(200).send(data);
     } catch (err) {
       res.status(500).send({ error: "Server error" });
+
     }
-  });
-  
-  //used to look up all public entries
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send({ error: "Server error" });
+  }
+});
+
+//used to look up all public entries
   router.get("/", async (req, res) => {
     const is_public = req.query.is_public ? req.query.is_public : "False";
     try {
@@ -109,7 +114,11 @@ router.get("/:entry_id", async (req, res) => {
       console.log(err);
       res.status(500).send({ error: "Server error" });
     }
-  });
-  
+    res.status(201).send(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: "Server error" });
+  }
+});
 
-  export default router;
+export default router;
