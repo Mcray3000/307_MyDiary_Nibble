@@ -94,9 +94,9 @@ function MyApp() {
             element={<CreateUser handleSubmit={handleCreateUser} />}
           />
           <Route path="/main" element={<MainPage addAuth={addAuthHeader} />} />
-          <Route path="/diary" element={<DiaryEntry />} />
-          <Route path="/edit/:id" element={<EditEntry />} />
-          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/diary" element={<DiaryEntry addAuth={addAuthHeader}/>} />
+          <Route path="/edit/:id" element={<EditEntry addAuth={addAuthHeader}/>} />
+          <Route path="/calendar" element={<Calendar addAuth={addAuthHeader}/>} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/discover/:id" element={<ViewEntry />} />
         </Routes>

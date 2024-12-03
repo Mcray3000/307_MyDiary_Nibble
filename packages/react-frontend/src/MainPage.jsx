@@ -17,7 +17,7 @@ function MainPage(props) {
 
     // Fetch previous entries from backend
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`, {
-      method: 'GET',
+      method: "GET",
       headers: props.addAuth(),
     })
       .then((res) => {

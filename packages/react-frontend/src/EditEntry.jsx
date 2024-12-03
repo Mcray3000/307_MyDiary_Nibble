@@ -13,7 +13,7 @@ import save from "./assets/Save.svg";
 import savehover from "./assets/SaveHover.svg";
 import HamburgerMenu from "./HamburgerMenu";
 
-function EditEntry() {
+function EditEntry(props) {
   const { id } = useParams(); // Get the entry ID from the URL
   const navigate = useNavigate(); // For redirecting after saving
   const [entry, setEntry] = useState("");
@@ -24,7 +24,10 @@ function EditEntry() {
 
   useEffect(() => {
     // Fetch the entry to edit using the entry_id
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+      method: `GET`,
+      headers: props.addAuth(),
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entry.");
@@ -93,11 +96,10 @@ function EditEntry() {
 
     // Send the updated entry to your backend API (PUT request)
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
-      // Use the ID in the URL
       method: "PUT",
-      headers: {
+      headers: props.addAuth({
         "Content-Type": "application/json",
-      },
+      }),
       body: JSON.stringify(updatedEntry),
     })
       .then((res) => {
