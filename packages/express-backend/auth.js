@@ -12,7 +12,8 @@ export function authenticateUser(req, res, next) {
       process.env.TOKEN_SECRET,
       (error, decoded) => {
         if (decoded) {
-          const user_name = decoded.id;
+          const user_name = decoded.username;
+          req.user_name = user_name;
           console.log(user_name);
           next();
         } else {

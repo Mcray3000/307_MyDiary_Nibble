@@ -4,7 +4,7 @@ import express from "express";
 const router = express.Router()
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
-import { authenticateUser } from "../auth";
+import { authenticateUser } from "../auth.js";
 dotenv.config({ path: "../../.env" });
 
 const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
@@ -64,8 +64,10 @@ router.get("/:entry_id", async (req, res) => {
     }
   });
 
-  router.get("/home", authenticateUser, async (req, res) => {
-    return res.status(200).send();
+  router.get("/home", authenticateUser, (req, res) => {
+    console.log("Hello, in /home");
+    console.log(req.user_name);
+    res.status(200).send({});
   })
   
   //adding a new entry

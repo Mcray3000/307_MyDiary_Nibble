@@ -56,33 +56,30 @@ function MyApp() {
     return fetch(`${import.meta.env.VITE_BACKEND_URL}/users?name=${name}`);
   }
 
-  function handleCreateUser(person) {
-    return postUser(person).then((res) => {
-      if (!res.ok) {
-        // Handle error based on response status or returned JSON
-        if (res.status === 403) {
-          throw new Error("Username already exists.");
-        } else {
-          throw new Error("Failed to create user.");
-        }
+  async function handleCreateUser(person) {
+    const res = await postUser(person);
+    if (!res.ok) {
+      // Handle error based on response status or returned JSON
+      if (res.status === 403) {
+        throw new Error("Username already exists.");
+      } else {
+        throw new Error("Failed to create user.");
       }
-      // No need to parse JSON here since the response is a simple message
-      return true; // Indicate successful user creation
-    });
+    }
+    return true;
   }
 
-  function handleLogin(person) {
-    return checkUserLogin(person).then((res) => {
-      if (!res.ok) {
-        if (res.status == 401) {
-          throw new Error("Invalid username or password.");
-        }
-        else {
-          throw new Error("Some error happened. Please try again.");
-        }
+  async function handleLogin(person) {
+    const res = await checkUserLogin(person);
+    if (!res.ok) {
+      if (res.status == 401) {
+        throw new Error("Invalid username or password.");
       }
-      return res.json();
-    });
+      else {
+        throw new Error("Some error happened. Please try again.");
+      }
+    }
+    return await res.json();
   }
 
   return (
@@ -94,7 +91,7 @@ function MyApp() {
             path="/create"
             element={<CreateUser handleSubmit={handleCreateUser} />}
           />
-          <Route path="/main" element={<MainPage />} />
+          <Route path="/main" element={<MainPage addAuthHeader={addAuthHeader}/>} />
           <Route path="/diary" element={<DiaryEntry />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/discover" element={<Discover />} />

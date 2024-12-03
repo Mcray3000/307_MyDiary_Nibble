@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HamburgerMenu from "./HamburgerMenu";
 
-function MainPage() {
+function MainPage(props) {
   const [currentDate, setCurrentDate] = useState("");
   const [entries, setEntries] = useState([
     {
@@ -23,7 +23,7 @@ function MainPage() {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entries.");
