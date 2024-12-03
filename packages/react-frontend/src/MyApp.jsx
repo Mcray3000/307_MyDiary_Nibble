@@ -91,7 +91,7 @@ function MyApp() {
             path="/create"
             element={<CreateUser handleSubmit={handleCreateUser} />}
           />
-          <Route path="/main" element={<MainPage addAuthHeader={addAuthHeader}/>} />
+          <Route path="/main" element={<MainPage addAuth={addAuthHeader} />} />
           <Route path="/diary" element={<DiaryEntry />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/discover" element={<Discover />} />

@@ -1,7 +1,9 @@
+import jwt from "jsonwebtoken";
+
 export function authenticateUser(req, res, next) {
   const authHeader = req.headers["authorization"];
   //Getting the 2nd part of the auth header (the token)
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = authHeader;
 
   if (!token) {
     console.log("No token received");
@@ -11,16 +13,14 @@ export function authenticateUser(req, res, next) {
       token,
       process.env.TOKEN_SECRET,
       (error, decoded) => {
-        if (decoded) {
-          const user_name = decoded.username;
-          req.user_name = user_name;
-          console.log(user_name);
-          next();
-        } else {
+        if (error) {
           console.log("JWT error:", error);
-          res.status(401).end();
+          res.status(401).end(); 
         }
-      }
+        const user_name = decoded.username;
+        req.user_name = user_name;
+        next();
+        }
     );
   }
 }

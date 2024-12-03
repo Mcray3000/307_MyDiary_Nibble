@@ -23,7 +23,10 @@ function MainPage(props) {
     setCurrentDate(formattedDate);
 
     // Fetch previous entries from backend
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`, {
+      method: 'GET',
+      headers: props.addAuth(),
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entries.");

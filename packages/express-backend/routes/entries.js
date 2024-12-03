@@ -11,6 +11,12 @@ const supabaseUrl = "https://vzutkihkzjyhnwzqsgrx.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+router.get("/home", authenticateUser, async (req, res) => {
+  console.log("Hello, from /home");
+  console.log(req.user_name);
+  res.status(200).send({});
+});
+
 //returns entry given an id
 router.get("/:entry_id", async (req, res) => {
     try {
@@ -63,12 +69,6 @@ router.get("/:entry_id", async (req, res) => {
       res.status(500).send({ error: "Server error" });
     }
   });
-
-  router.get("/home", authenticateUser, (req, res) => {
-    console.log("Hello, in /home");
-    console.log(req.user_name);
-    res.status(200).send({});
-  })
   
   //adding a new entry
   router.post("/", authenticateUser, async (req, res) => {
