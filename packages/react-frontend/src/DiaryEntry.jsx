@@ -13,7 +13,7 @@ import save from "./assets/Save.svg";
 import savehover from "./assets/SaveHover.svg";
 import HamburgerMenu from "./HamburgerMenu";
 
-function DiaryEntry() {
+function DiaryEntry(props) {
   const [entry, setEntry] = useState("");
   const [title, setTitle] = useState("");
   const [isPrivate, setIsPrivate] = useState(true); // Initially private
@@ -78,9 +78,9 @@ function DiaryEntry() {
     // Send the diary entry to your backend API
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
       method: "POST",
-      headers: {
+      headers: props.addAuth({
         "Content-Type": "application/json",
-      },
+      }),
       body: JSON.stringify(diaryEntry),
     })
       .then((res) => {

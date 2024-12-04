@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import HamburgerMenu from "./HamburgerMenu";
+import { Link } from "react-router-dom";
 // there are modules for building calendars, but for our MVP we are hard coding the months of Nov, Dec 2024
-function Calendar() {
+function Calendar(props) {
   const [month, setMonth] = useState("November 2024");
   const [diaryEntries, setDiaryEntires] = useState({});
   const [selectDate, setSelectedDate] = useState(null);
@@ -13,18 +14,19 @@ function Calendar() {
 
   //load all entries from db
   function getEntries() {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/home`, {
       method: "GET",
-      headers: {
+      headers: props.addAuth({
         "Content-Type": "application/json",
-      },
+      }),
     })
       .then((response) => response.json())
       // format timestamps to fetch entries by date only
       .then((data) => {
+        console.log(data);
         const formattedEntries = {};
         data.forEach((entry) => {
-          const date = formatDate(entry.date);
+          const date = formatDate(entry.publish_date);
           if (!formattedEntries[date]) {
             formattedEntries[date] = [];
           }
@@ -668,11 +670,9 @@ function Calendar() {
         <div className="entries-grid">
           {/* Map through the 'entries' state to display previous entries */}
           {entries.map((entry, index) => (
-            <div key={index} className="entry-card">
-              <div className="entry-title">{entry.title}</div>{" "}
-              <div className="entry-author">Author: {entry.author}</div>
-              <div className="entry-date">{formatDate(entry.date)}</div>{" "}
-            </div>
+            <Link key={entry.entry_id} to={`/discover/${entry.entry_id}`} className="entry-card">
+              <div className="entry-title">{entry.title}</div>
+            </Link>
           ))}
         </div>
         <button onClick={onClose} type="button" className="round-button">

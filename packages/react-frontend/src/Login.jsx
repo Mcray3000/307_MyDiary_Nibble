@@ -30,7 +30,6 @@ function Login(props) {
     props
       .handleLogin(person)
       .then((res) => {
-        localStorage.setItem("username", person.name);
         localStorage.setItem("token", res.token);
         navigate("/main");
       })

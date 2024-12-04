@@ -13,18 +13,21 @@ import save from "./assets/Save.svg";
 import savehover from "./assets/SaveHover.svg";
 import HamburgerMenu from "./HamburgerMenu";
 
-function EditEntry() {
+function EditEntry(props) {
   const { id } = useParams(); // Get the entry ID from the URL
   const navigate = useNavigate(); // For redirecting after saving
   const [entry, setEntry] = useState("");
   const [title, setTitle] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isFavorite, setIsFavorite] = useState();
   const [lastEdited, setLastEdited] = useState(null);
 
   useEffect(() => {
-    // Fetch the entry to edit using the ID
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`)
+    // Fetch the entry to edit using the entry_id
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+      method: `GET`,
+      headers: props.addAuth(),
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch entry.");
@@ -36,7 +39,7 @@ function EditEntry() {
         console.log("API response: ", data, "id: ", id);
         setTitle(data[0].title);
         setEntry(data[0].entry);
-        setIsPrivate(data[0].is_public === "false");
+        setIsPrivate(!data[0].is_public);
       })
       .catch((error) => {
         console.error("Error fetching entry:", error);
@@ -93,11 +96,10 @@ function EditEntry() {
 
     // Send the updated entry to your backend API (PUT request)
     fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
-      // Use the ID in the URL
       method: "PUT",
-      headers: {
+      headers: props.addAuth({
         "Content-Type": "application/json",
-      },
+      }),
       body: JSON.stringify(updatedEntry),
     })
       .then((res) => {
