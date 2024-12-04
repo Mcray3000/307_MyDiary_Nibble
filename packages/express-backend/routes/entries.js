@@ -98,21 +98,29 @@ router.put("/:entry_id", authenticateUser, async (req, res) => {
 
 //adding a new entry
 router.post("/", authenticateUser, async (req, res) => {
-  const { user_id, title, entry, is_public, status } = req.body;
+  const { title, entry, is_public, status } = req.body;
   // Set publish_date if status is 'published'
   const publish_date = status === "published" ? new Date().toISOString() : null;
   console.log(req.body);
 
   try {
-    const { data, error } = await supabase
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("user_name", req.user_name)
+    if (userError) {
+      return res.status(400).send({ error: userError });
+    }
+    const user_id = userData[0].id
+    const { data: entryData, error: entryError } = await supabase
       .from("entries")
       .insert({ user_id, title, entry, is_public, status, publish_date })
       .select();
 
-    if (error) {
-      return res.status(500).send({ error: error.message });
+    if (entryError) {
+      return res.status(500).send({ error: entryError.message });
     }
-    res.status(201).send(data);
+    res.status(201).send(entryData);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: "Server error" });

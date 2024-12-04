@@ -68,7 +68,6 @@ function DiaryEntry(props) {
 
     // Prepare the diary entry object
     const diaryEntry = {
-      user_id: 125, // Temporary static ID of user_name 'MiladRocks249'; update with authenticated user ID when available
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
