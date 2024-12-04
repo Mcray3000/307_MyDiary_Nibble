@@ -1,4 +1,4 @@
-// src/DiaryEntry.jsx
+// src/EditEntry.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import closedtrash from "./assets/ClosedTrash.svg";
@@ -13,17 +13,40 @@ import save from "./assets/Save.svg";
 import savehover from "./assets/SaveHover.svg";
 import HamburgerMenu from "./HamburgerMenu";
 
-function DiaryEntry(props) {
+function EditEntry(props) {
+  const { id } = useParams(); // Get the entry ID from the URL
+  const navigate = useNavigate(); // For redirecting after saving
   const [entry, setEntry] = useState("");
   const [title, setTitle] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true); // Initially private
-  const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isShare, setIsShare] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isFavorite, setIsFavorite] = useState();
   const [lastEdited, setLastEdited] = useState(null);
 
   useEffect(() => {
-    // Function to update lastEdited time
+    // Fetch the entry to edit using the entry_id
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+      method: `GET`,
+      headers: props.addAuth(),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch entry.");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // Assuming your API returns an object with title, entry, etc.
+        console.log("API response: ", data, "id: ", id);
+        setTitle(data[0].title);
+        setEntry(data[0].entry);
+        setIsPrivate(!data[0].is_public);
+      })
+      .catch((error) => {
+        console.error("Error fetching entry:", error);
+      });
+  }, [id]);
+
+  useEffect(() => {
     const updateLastEdited = () => {
       const now = new Date();
       const options = {
@@ -35,16 +58,13 @@ function DiaryEntry(props) {
       setLastEdited(formattedTime);
     };
 
-    // Update lastEdited initially
     updateLastEdited();
 
-    // Event listeners to update lastEdited on input changes
     const inputFields = document.querySelectorAll(".diary-title, textarea");
     inputFields.forEach((input) => {
       input.addEventListener("input", updateLastEdited);
     });
 
-    // Cleanup: remove event listeners when component unmounts
     return () => {
       inputFields.forEach((input) => {
         input.removeEventListener("input", updateLastEdited);
@@ -53,7 +73,7 @@ function DiaryEntry(props) {
   }, []);
 
   const handleChange = (e) => {
-    setEntry(e.target.value); // Update state with the value from the textarea
+    setEntry(e.target.value);
   };
 
   const handleTitleChange = (e) => {
@@ -66,32 +86,31 @@ function DiaryEntry(props) {
       return;
     }
 
-    // Prepare the diary entry object
-    const diaryEntry = {
+    const updatedEntry = {
+      user_id: 125,
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
       status: isPrivate ? "draft" : "published",
     };
 
-    // Send the diary entry to your backend API
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries`, {
-      method: "POST",
+    // Send the updated entry to your backend API (PUT request)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+      method: "PUT",
       headers: props.addAuth({
         "Content-Type": "application/json",
       }),
-      body: JSON.stringify(diaryEntry),
+      body: JSON.stringify(updatedEntry),
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Failed to save scribble.");
+          throw new Error("Failed to update entry.");
         }
+        // Redirect to the main page or the updated entry's page
         navigate("/main");
-        // console.log("Scribble saved successfully!");
       })
       .catch((error) => {
-        console.error("Error saving scribble:", error);
-        // Handle the error (e.g., show an error message)
+        console.error("Error updating entry:", error);
       });
   };
 
@@ -106,10 +125,6 @@ function DiaryEntry(props) {
 
   const handleStar = () => {
     setIsFavorite(!isFavorite);
-  };
-
-  const handleShare = () => {
-    setIsShare(!isShare);
   };
 
   return (
@@ -223,4 +238,4 @@ function DiaryEntry(props) {
   );
 }
 
-export default DiaryEntry;
+export default EditEntry;
