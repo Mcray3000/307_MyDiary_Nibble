@@ -179,7 +179,7 @@ function EditEntry(props) {
             >
               <img
                 src={save}
-                alt="Share"
+                alt="Save"
                 onMouseOver={(e) => (e.currentTarget.src = savehover)}
                 onMouseOut={(e) => (e.currentTarget.src = save)}
               />

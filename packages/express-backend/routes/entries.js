@@ -45,7 +45,6 @@ router.get("/:entry_id", async (req, res) => {
 
 //used to look up all public entries
 router.get("/", async (req, res) => {
-  const is_public = req.query.is_public ? req.query.is_public : "False";
   try {
     const { data, error } = await supabase.from("public_entries").select("*");
     if (error) {
@@ -83,8 +82,8 @@ router.put("/:entry_id", authenticateUser, async (req, res) => {
 //adding a new entry
 router.post("/", authenticateUser, async (req, res) => {
   const { title, entry, is_public, status } = req.body;
-  // Set publish_date if status is 'published'
-  const publish_date = status === "published" ? new Date().toISOString() : null;
+  // always set publish date for any saved entry
+  const publish_date = new Date().toISOString();
   console.log(req.body);
 
   try {
