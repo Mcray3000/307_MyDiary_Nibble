@@ -47,6 +47,7 @@ describe('Change accessibility', () => {
 
       cy.get('textarea[placeholder="Scribble here..."]').type('This is my diary content.');
       cy.get('textarea[placeholder="Scribble here..."]').should('have.value', 'This is my diary content.');
+      //cy.get('a.create-button').click();
 
     })
   })
