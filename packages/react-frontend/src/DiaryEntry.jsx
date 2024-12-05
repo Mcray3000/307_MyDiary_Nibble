@@ -71,7 +71,7 @@ function DiaryEntry(props) {
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
-      status: isPrivate ? "draft" : "published",
+      status: "published",
     };
 
     // Send the diary entry to your backend API
