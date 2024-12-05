@@ -52,5 +52,8 @@
   "homepage": "https://github.com/Mcray3000/307_MyDiary_Nibble#readme",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.28.0"
+  }
 }
