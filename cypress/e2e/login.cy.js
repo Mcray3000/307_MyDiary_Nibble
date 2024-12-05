@@ -3,14 +3,14 @@
 describe('User login', () => {
     it('User cannot log in with empty textboxes', () => {
       //login page
-      cy.visit('http://localhost:5173/')
+      cy.visit('https://scribbleandnibble.vercel.app/')
 
       // submit the form 
       cy.get('input.form-button[value="Login"]').click();
 
       // error message
       cy.contains('Invalid username or password').should('be.visible');
-      cy.url().should('eq', 'http://localhost:5173/');
+      cy.url().should('eq', 'https://scribbleandnibble.vercel.app/');
 
     })
   })
@@ -18,7 +18,7 @@ describe('User login', () => {
 describe('User login', () => {
     it('User successfully logs in', () => {
       //login page
-      cy.visit('http://localhost:5173/')
+      cy.visit('https://scribbleandnibble.vercel.app/')
 
       // fill in the form
       cy.get('input[name="name"]').type('Bobo')
@@ -36,7 +36,7 @@ describe('User login', () => {
   describe('User login fail', () => {
     it('User can not log in with wrong password', () => {
       //login page
-      cy.visit('http://localhost:5173/')
+      cy.visit('scribbleandnibble.vercel.app/')
 
       // fill in the form
       cy.get('input[name="name"]').type('Bobo')
@@ -47,7 +47,7 @@ describe('User login', () => {
 
       // error message
       cy.contains('Invalid username or password').should('be.visible');
-      cy.url().should('eq', 'http://localhost:5173/');
+      cy.url().should('eq', 'https://scribbleandnibble.vercel.app/');
     })
   })
 
@@ -65,7 +65,7 @@ describe('User login', () => {
       }).as('createUser');
 
       //login page
-      cy.visit('http://localhost:5173/')
+      cy.visit('https://scribbleandnibble.vercel.app/')
 
       // click button to create a new user
       cy.get('input.form-button[value="New User"]').click();
