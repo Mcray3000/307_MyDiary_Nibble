@@ -12,7 +12,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 router.get("/", async (req, res) => {
-    const name = req.query.name;
+    const name = req.query.user_name;
     let data, error;
   
     if (name === undefined) {
