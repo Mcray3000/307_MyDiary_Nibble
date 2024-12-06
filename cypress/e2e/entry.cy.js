@@ -26,7 +26,17 @@ describe('Change accessibility', () => {
 
   describe('Create new entry', () => {
     it('User creates a new entry and saves it', () => {
-      //login page
+        // mock 
+        cy.intercept('POST', '/entries', {
+            statusCode: 200,
+            body: {
+              id: 1,
+              title: 'My First Diary Entry',
+              content: 'This is my diary content.',
+            },
+          }).as('saveDiaryEntry');
+      
+        //login page
       cy.visit('https://scribbleandnibble.vercel.app/')
 
       // fill in the form
@@ -47,7 +57,13 @@ describe('Change accessibility', () => {
 
       cy.get('textarea[placeholder="Scribble here..."]').type('This is my diary content.');
       cy.get('textarea[placeholder="Scribble here..."]').should('have.value', 'This is my diary content.');
-      //cy.get('a.create-button').click();
+      cy.get('button.diary-button').find('img[alt="Save"]').click();
+
+      // Wait for the mocked request to complete
+      cy.wait('@saveDiaryEntry');
+
+      // should nav back to main page
+      cy.url().should('eq', 'https://scribbleandnibble.vercel.app/main');
 
     })
   })
