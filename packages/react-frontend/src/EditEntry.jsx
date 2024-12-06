@@ -87,11 +87,10 @@ function EditEntry(props) {
     }
 
     const updatedEntry = {
-      user_id: 125,
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
-      status: isPrivate ? "draft" : "published",
+      status: "published",
     };
 
     // Send the updated entry to your backend API (PUT request)
@@ -115,8 +114,26 @@ function EditEntry(props) {
   };
 
   const handleTrash = () => {
-    setEntry("");
-    setTitle("");
+    if (window.confirm("Do you want to delete this entry? This will navigate you home.")) {
+      // Send DELETE request to backend
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+        method: "DELETE",
+        headers: props.addAuth(),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to delete entry.");
+          }
+          alert("Entry deleted successfully.");
+          navigate("/main"); // redirect after deletion
+        })
+        .catch((error) => {
+          console.error("Error deleting entry:", error);
+          alert("An error occurred while deleting the entry.");
+        });
+    }
+    return;
+
   };
 
   const handleLock = () => {
@@ -169,7 +186,7 @@ function EditEntry(props) {
                 if (
                   window.confirm(
                     "Are you sure you want to save? " +
-                      "If your entry is public it will " +
+                      "If your entry is public, it will " +
                       "be saved on the public page."
                   )
                 ) {

@@ -110,4 +110,53 @@ router.post("/", authenticateUser, async (req, res) => {
   }
 });
 
+router.delete("/:entry_id", authenticateUser, async (req, res) => {
+  const { entry_id } = req.params;
+
+  try {
+    // verify the entry belongs to authenticated user
+    const { data: entryData, error: entryFetchError } = await supabase
+      .from("entries")
+      .select("user_id")
+      .eq("entry_id", entry_id)
+      .single();
+
+    if (entryFetchError) {
+      return res.status(404).send({ error: "Entry not found or access denied." });
+    }
+
+    // check if entry's user_id matches the authenticated user_id
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("id")
+      .eq("user_name", req.user_name)
+      .single();
+
+    if (userError) {
+      return res.status(400).send({ error: userError.message });
+    }
+
+    if (entryData.user_id !== userData.id) {
+      return res.status(403).send({ error: "You do not have permission to delete this entry." });
+    }
+
+    // delete entry
+    const { data: deleteData, error: deleteError } = await supabase
+      .from("entries")
+      .delete()
+      .eq("entry_id", entry_id);
+
+    if (deleteError) {
+      return res.status(500).send({ error: deleteError.message });
+    }
+
+    res.status(200).send({ message: "Entry deleted successfully." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: "Server error" });
+  }
+});
+
+
+
 export default router;
