@@ -81,17 +81,38 @@ function EditEntry(props) {
   };
 
   const handleSave = () => {
+    if (title.trim() === "" && entry.trim() === "") {
+      if (window.confirm("Both the title and entry are empty. Saving will delete this entry. Continue?")) {
+        // Send DELETE request to your backend API
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+          method: "DELETE",
+          headers: props.addAuth(),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("Failed to delete entry.");
+            }
+            alert("Entry deleted successfully.");
+            navigate("/main"); // redirect after deletion
+          })
+          .catch((error) => {
+            console.error("Error deleting entry:", error);
+            alert("An error occurred while deleting the entry.");
+          });
+      }
+      return;
+    }
+
     if (title.trim().length < 2 || entry.trim().length < 2) {
       alert("Please enter a title and text with at least 2 characters.");
       return;
     }
 
     const updatedEntry = {
-      user_id: 125,
       title,
       entry,
       is_public: isPrivate ? "false" : "true",
-      status: isPrivate ? "draft" : "published",
+      status: "published",
     };
 
     // Send the updated entry to your backend API (PUT request)
@@ -169,7 +190,7 @@ function EditEntry(props) {
                 if (
                   window.confirm(
                     "Are you sure you want to save? " +
-                      "If your entry is public it will " +
+                      "If your entry is public, it will " +
                       "be saved on the public page."
                   )
                 ) {
