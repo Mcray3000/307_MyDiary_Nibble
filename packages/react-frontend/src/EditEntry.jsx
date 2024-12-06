@@ -114,9 +114,6 @@ function EditEntry(props) {
   };
 
   const handleTrash = () => {
-    setEntry("");
-    setTitle("");
-
     if (window.confirm("Do you want to delete this entry? This will navigate you home.")) {
       // Send DELETE request to backend
       fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
