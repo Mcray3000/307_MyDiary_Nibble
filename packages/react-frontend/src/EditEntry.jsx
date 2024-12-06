@@ -81,28 +81,6 @@ function EditEntry(props) {
   };
 
   const handleSave = () => {
-    if (title.trim() === "" && entry.trim() === "") {
-      if (window.confirm("Both the title and entry are empty. Saving will delete this entry. Continue?")) {
-        // Send DELETE request to your backend API
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
-          method: "DELETE",
-          headers: props.addAuth(),
-        })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error("Failed to delete entry.");
-            }
-            alert("Entry deleted successfully.");
-            navigate("/main"); // redirect after deletion
-          })
-          .catch((error) => {
-            console.error("Error deleting entry:", error);
-            alert("An error occurred while deleting the entry.");
-          });
-      }
-      return;
-    }
-
     if (title.trim().length < 2 || entry.trim().length < 2) {
       alert("Please enter a title and text with at least 2 characters.");
       return;
@@ -138,6 +116,27 @@ function EditEntry(props) {
   const handleTrash = () => {
     setEntry("");
     setTitle("");
+
+    if (window.confirm("Do you want to delete this entry? This will navigate you home.")) {
+      // Send DELETE request to backend
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/entries/${id}`, {
+        method: "DELETE",
+        headers: props.addAuth(),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to delete entry.");
+          }
+          alert("Entry deleted successfully.");
+          navigate("/main"); // redirect after deletion
+        })
+        .catch((error) => {
+          console.error("Error deleting entry:", error);
+          alert("An error occurred while deleting the entry.");
+        });
+    }
+    return;
+
   };
 
   const handleLock = () => {
